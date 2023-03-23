@@ -1675,7 +1675,7 @@ public  void enterRequiredBranch(String branch) throws Exception {
 			
 	     	clickOnAirlock();
 			
-	     	//enablingResponsiveMode();
+	     	enablingResponsiveMode();
 			
 	     	clickOnUserGroups();
 		

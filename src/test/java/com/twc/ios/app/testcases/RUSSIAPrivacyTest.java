@@ -24,6 +24,7 @@ import com.twc.ios.app.pages.HourlyNavTab;
 import com.twc.ios.app.pages.PlanningCardScreen;
 import com.twc.ios.app.pages.RadarNavTab;
 import com.twc.ios.app.pages.SeasonalHubCardScreen;
+import com.twc.ios.app.pages.SettingsScreen;
 import com.twc.ios.app.pages.VideoNavTab;
 
 import io.appium.java_client.appmanagement.ApplicationState;
@@ -42,6 +43,7 @@ public class RUSSIAPrivacyTest extends TwcIosBaseTest {
 	AddressScreen addrScreen;
 	PlanningCardScreen pScreen;
 	SeasonalHubCardScreen sScreen;
+	SettingsScreen stScreen;
 
 	@BeforeClass(alwaysRun = true)
 	@Description("BeforeClass")
@@ -211,8 +213,8 @@ public class RUSSIAPrivacyTest extends TwcIosBaseTest {
 	@Description("WFXTrigger Call verification")
 	public void Verify_WFXTriggers_Call_or_RUSSIA() throws Exception {
 		System.out.println("==============================================");
-		System.out.println("****** triggers.wfxtriggers.com Call test case Started");
-		logStep("****** triggers.wfxtriggers.com Call test case Started");
+		System.out.println("****** prod.weatherfx.com Call test case Started");
+		logStep("****** prod.weatherfx.com Call test case Started");
 		Utils.verifyAPICal("Smoke", "WFXTrigger", false);
 
 	}

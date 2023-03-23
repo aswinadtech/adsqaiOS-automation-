@@ -194,8 +194,8 @@ public class CHINAPrivacyTest extends TwcIosBaseTest {
 	@Description("WFXTrigger Call verification")
 	public void Verify_WFXTriggers_Call_or_CHINA() throws Exception {
 		System.out.println("==============================================");
-		System.out.println("****** triggers.wfxtriggers.com Call test case Started");
-		logStep("****** triggers.wfxtriggers.com Call test case Started");
+		System.out.println("****** prod.weatherfx.com Call test case Started");
+		logStep("****** prod.weatherfx.com Call test case Started");
 		Utils.verifyAPICal("Smoke", "WFXTrigger", false);
 
 	}

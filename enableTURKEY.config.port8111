@@ -173,6 +173,14 @@
         <columnStates/>
       </entry>
       <entry>
+        <string>SessionFrame.splitPlane.dividerLocation.vertical</string>
+        <int>200</int>
+      </entry>
+      <entry>
+        <string>SessionFrame.navTabs.mode</string>
+        <string>Sequence</string>
+      </entry>
+      <entry>
         <string>NavigatorJTable.TABLE_COLUMN_STATES</string>
         <columnStates/>
       </entry>
@@ -249,7 +257,7 @@
                     <location>
                       <protocol>https</protocol>
                       <host>dsx.weather.com</host>
-                      <path>/cms/v5/privacy/en_US/*/*</path>
+                      <path>/cms/v5/privacy/en_US/twc-ios-flagship/*</path>
                     </location>
                     <enabled>true</enabled>
                   </locationMatch>

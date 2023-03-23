@@ -211,6 +211,10 @@ public class USACCPAPrivacyTest extends TwcIosBaseTest {
 			  Functions.checkForAppState();
 		   	  Functions.put_Background_launch(15);
 			  Functions.checkForAppState();
+			  addrScreen.clearAddedAddresses();
+				TestBase.waitForMilliSeconds(5000);
+				addrScreen.enternewAddress(false, "07095", "Woodbridge, New Jersey");
+				TestBase.waitForMilliSeconds(20000);
 		}
 	  
 	  }
@@ -351,8 +355,8 @@ public class USACCPAPrivacyTest extends TwcIosBaseTest {
 	@Description("WFXTrigger Call when privacy optin")
 	public void Verify_WFXTriggers_Call_privacy_optin_for_USACCPA() throws Exception {
 		System.out.println("==============================================");
-		System.out.println("****** triggers.wfxtriggers.com Call test case Started when privacy optin");
-		logStep("****** triggers.wfxtriggers.com Call test case Started when privacy optin");
+		System.out.println("****** prod.weatherfx.com Call test case Started when privacy optin");
+		logStep("****** prod.weatherfx.com Call test case Started when privacy optin");
 		Utils.verifyAPICal("Smoke", "WFXTrigger", true);
 
 	}
@@ -467,6 +471,10 @@ public class USACCPAPrivacyTest extends TwcIosBaseTest {
 			Functions.checkForAppState();
 			Functions.put_Background_launch(15);
 			Functions.checkForAppState();
+			addrScreen.clearAddedAddresses();
+			TestBase.waitForMilliSeconds(5000);
+			addrScreen.enternewAddress(false, "07095", "Woodbridge, New Jersey");
+			TestBase.waitForMilliSeconds(20000);
 		}
 		
 	}
@@ -593,8 +601,8 @@ public class USACCPAPrivacyTest extends TwcIosBaseTest {
 	@Description("WFXTrigger Call when privacy optout")
 	public void Verify_WFXTriggers_Call_privacy_optout_for_USACCPA() throws Exception {
 		System.out.println("==============================================");
-		System.out.println("****** triggers.wfxtriggers.com Call test case Started when privacy optout");
-		logStep("****** triggers.wfxtriggers.com Call test case Started when privacy optout");
+		System.out.println("****** prod.weatherfx.com Call test case Started when privacy optout");
+		logStep("****** prod.weatherfx.com Call test case Started when privacy optout");
 		Utils.verifyAPICal("Smoke", "WFXTrigger", true);
 
 	}

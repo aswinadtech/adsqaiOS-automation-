@@ -3,6 +3,7 @@ package com.twc.ios.app.pages;
 import java.time.Duration;
 import java.util.List;
 
+import org.apache.poi.util.SystemOutLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.testng.Assert;
@@ -205,7 +206,7 @@ public class LifeStyleCardScreen extends Utils {
 	
 	@Step("Navigae To Desired Index of LifeStyle Card")
 	public void navigateToLifeStyleCardIndexAndAssertAd(String indexName) throws Exception {
-		TestBase.waitForMilliSeconds(10000);
+		TestBase.waitForMilliSeconds(5000);
 		try {
 
 			List<MobileElement> ls;
@@ -241,7 +242,7 @@ public class LifeStyleCardScreen extends Utils {
 					
 					TestBase.clickOnElement(byLifeStyleCardDynamicIndex, lifeStyleCardDynamicIndex,
 							"LifeStyle Card Index " + l);
-					TestBase.waitForMilliSeconds(6000);
+					TestBase.waitForMilliSeconds(10000);
 
 					// System.out.println("Current Context is: "+ Ad.getContext());
 					/*
@@ -375,8 +376,24 @@ public class LifeStyleCardScreen extends Utils {
 
 	@Step("Navigate To Articles Page")
 	public void navigateToArticlesPage() {
-		articlesLink = Ad.findElement(byArticlesLink);
-		TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");
+		/*articlesLink = Ad.findElement(byArticlesLink);
+		TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");*/
+		for (int i = 1; i<=3; i++) {
+			System.out.println("Current iteration: "+i);
+			/**
+			 * As part of 12.36 IOSFLAG-9222, both Video and News articles are added to list..based on last updated date 3 of 4 from dsx call will be listed
+			 * Since Video has two XCUIElementTypeImage s, checking for item which has one XCUIElementTypeImage
+			 */
+			List<MobileElement> currentItem = Ad.findElements(MobileBy.xpath("(//XCUIElementTypeStaticText[@label='Latest News']/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeButton)["+i+"]/parent::XCUIElementTypeOther/XCUIElementTypeImage"));
+			int imageCount = currentItem.size();
+			if (imageCount==1) {
+				byArticlesLink = MobileBy.xpath("(//XCUIElementTypeStaticText[@label='Latest News']/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeButton)["+i+"]");
+				articlesLink = Ad.findElement(byArticlesLink);
+				TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");
+				break;
+			}
+			
+		}
 	}
 
 	@Step("Verify Articles Page Header")

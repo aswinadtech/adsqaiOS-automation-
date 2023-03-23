@@ -9,6 +9,15 @@ import com.twc.ios.app.general.ParseForVideoOrderedList;
 import com.twc.ios.app.general.TestBase;
 import com.twc.ios.app.general.TwcIosBaseTest;
 import com.twc.ios.app.general.Utils;
+import com.twc.ios.app.pages.AddressScreen;
+import com.twc.ios.app.pages.DailyNavTab;
+import com.twc.ios.app.pages.HomeNavTab;
+import com.twc.ios.app.pages.HourlyNavTab;
+import com.twc.ios.app.pages.PlanningCardScreen;
+import com.twc.ios.app.pages.RadarNavTab;
+import com.twc.ios.app.pages.SeasonalHubCardScreen;
+import com.twc.ios.app.pages.SettingsScreen;
+import com.twc.ios.app.pages.VideoNavTab;
 
 import org.testng.annotations.BeforeClass;
 import java.io.File;
@@ -30,6 +39,15 @@ public class EXEMPTPrivacyTest extends TwcIosBaseTest {
 	private static final String CONFIG_FILE_PATH = "enableEXEMPT.config";
 
 	private File configFile;
+	HourlyNavTab hrTab;
+	DailyNavTab dTab;
+	HomeNavTab hmTab;
+	RadarNavTab rTab;
+	VideoNavTab vTab;
+	AddressScreen addrScreen;
+	PlanningCardScreen pScreen;
+	SeasonalHubCardScreen sScreen;
+	SettingsScreen stScreen;
 
 	@BeforeClass(alwaysRun = true)
 	@Description("BeforeClass")
@@ -149,8 +167,22 @@ public class EXEMPTPrivacyTest extends TwcIosBaseTest {
 		Functions.checkForAppState();
 		Functions.put_Background_launch(15);
 		Functions.checkForAppState();
+		hrTab = new HourlyNavTab(Ad);
+		dTab = new DailyNavTab(Ad);
+		hmTab = new HomeNavTab(Ad);
+		rTab = new RadarNavTab(Ad);
+		vTab = new VideoNavTab(Ad);
+		addrScreen = new AddressScreen(Ad);
+		pScreen = new PlanningCardScreen(Ad);
+		sScreen = new SeasonalHubCardScreen(Ad);
+		stScreen = new SettingsScreen(Ad);
+		addrScreen.clearAddedAddresses();
+		TestBase.waitForMilliSeconds(5000);
+		addrScreen.enternewAddress(false, "07095", "Woodbridge, New Jersey");
+		TestBase.waitForMilliSeconds(20000);
 		proxy.getXml();
 		Utils.createXMLFileForCharlesSessionFile();
+		
 	}
 
 	/*
@@ -186,8 +218,8 @@ public class EXEMPTPrivacyTest extends TwcIosBaseTest {
 	@Description("WFXTrigger Call verification")
 	public void Verify_WFXTriggers_Callfor_EXEMPT() throws Exception {
 		System.out.println("==============================================");
-		System.out.println("****** triggers.wfxtriggers.com Call test case Started");
-		logStep("****** triggers.wfxtriggers.com Call test case Started");
+		System.out.println("****** prod.weatherfx.com Call test case Started");
+		logStep("****** prod.weatherfx.com Call test case Started");
 		Utils.verifyAPICal("Smoke", "WFXTrigger", true);
 
 	}
@@ -215,7 +247,7 @@ public class EXEMPTPrivacyTest extends TwcIosBaseTest {
 		System.out.println("=========================== Criteo SDK inapp/v2 call ====================");
 		System.out.println("****** Criteo SDK inapp/v2 call validation Started");
 		logStep("****** Criteo SDK inapp/v2 call validation Started");
-		Utils.verifyCriteo_inapp_v2_Call("Smoke", "Criteo", false);
+		Utils.verifyCriteo_inapp_v2_Call("Smoke", "Criteo", true);
 
 	}
 
@@ -229,7 +261,7 @@ public class EXEMPTPrivacyTest extends TwcIosBaseTest {
 		System.out.println("=========================== Criteo SDK config/app call ====================");
 		System.out.println("****** Criteo SDK config/app call validation Started");
 		logStep("****** Criteo SDK config/app call validation Started");
-		Utils.verifyCriteo_config_app_Call("Smoke", "Criteo", false);
+		Utils.verifyCriteo_config_app_Call("Smoke", "Criteo", true);
 
 	}
 

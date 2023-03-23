@@ -37,7 +37,7 @@ public class AndroidLifeStyleCardScreen extends Utils {
 	String articlesLink_Xpath = "//android.view.ViewGroup[@resource-id='com.weather.Weather:id/breaking_news_grid_item_1']";
 	//String articlesHeader_AccessibilityId = "view_articleCategoryHeader";
 	String articlesHeader_Id = "com.weather.Weather:id/news_article_header";
-	
+	String videoArticleHeader_Xpath = "//android.widget.FrameLayout[@resource-id='com.weather.Weather:id/video_fragment_container']";
 	//String allergyContentNavigationBar_Xpath = "//XCUIElementTypeNavigationBar[@name='Allergy']";
 	String allergyContentNavigationBar_Xpath = "//android.widget.TextView[contains(@text, 'Allergy')]";
 	//String fluContentNavigationBar_Xpath = "//XCUIElementTypeNavigationBar[@name='Flu']";
@@ -55,6 +55,7 @@ public class AndroidLifeStyleCardScreen extends Utils {
 	By byArticlesLink = MobileBy.xpath(articlesLink_Xpath);
 	//By byArticlesHeader = MobileBy.xpath(articlesHeader_AccessibilityId);
 	By byArticlesHeader = MobileBy.id(articlesHeader_Id);
+	By byVideoArticleHeader = MobileBy.xpath(videoArticleHeader_Xpath);
 	By byAllergyContentNavigationBar = MobileBy.xpath(allergyContentNavigationBar_Xpath);
 	By byFluContentNavigationBar = MobileBy.xpath(fluContentNavigationBar_Xpath);
 	By byAdvertisementOnFludetails = MobileBy.xpath(advertisementOnFludetails_Xpath);
@@ -401,13 +402,55 @@ public class AndroidLifeStyleCardScreen extends Utils {
 
 	@Step("Navigate To Articles Page")
 	public void navigateToArticlesPage() {
-		articlesLink = Ad.findElement(byArticlesLink);
-		TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");
+		/*
+		 * articlesLink = Ad.findElement(byArticlesLink);
+		 * TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");
+		 */
+		boolean newsArticleFound = false;
+		for (int i = 1; i<=3; i++) {
+			System.out.println("Current iteration: "+i);
+			/**
+			 * As part of 10.63 ANDFLAG-9544, both Video and News articles are added to list..based on last updated date 3 of 4 from dsx call will be listed
+			 * Since Video has an android.widget.ImageView, checking for item which doesn't have android.widget.ImageView
+			 */
+			MobileElement currentItem = null;
+			try {
+				currentItem = Ad.findElement(MobileBy.xpath("(//android.widget.FrameLayout[@resource-id='com.weather.Weather:id/video_player_thumbnail_extra'])["+i+"]/android.widget.ImageView"));
+			}catch (Exception e) {
+				newsArticleFound = true;
+			}
+			
+			if (newsArticleFound) {
+				byArticlesLink = MobileBy.xpath("(//android.widget.FrameLayout[@resource-id='com.weather.Weather:id/video_player_thumbnail_extra'])["+i+"]");
+				articlesLink = Ad.findElement(byArticlesLink);
+				TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");
+				TestBase.waitForVisibilityOfElementLocated(Ad, 120, byArticlesHeader);
+				break;
+			}
+			
+		}
+		/**
+		 * There are  cases in  android  that, all three are video articles, hence if  news article  not found, going  through video article
+		 */
+		if (!newsArticleFound) {
+			byArticlesLink = MobileBy.xpath("(//android.widget.FrameLayout[@resource-id='com.weather.Weather:id/video_player_thumbnail_extra'])[1]");
+			articlesLink = Ad.findElement(byArticlesLink);
+			TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");
+			TestBase.waitForVisibilityOfElementLocated(Ad, 120, byVideoArticleHeader);
+		}
 	}
 
 	@Step("Verify Articles Page Header")
 	public void verifyArticlesPageHeader() {
-		articlesHeader = Ad.findElement(byArticlesHeader);
+		try{
+			articlesHeader = Ad.findElement(byArticlesHeader);
+		}catch(Exception e) {
+			/**
+			 * There are  cases in  android  that, all three are video articles, for video article, checking for entire container as there is no specific header for video articles
+			 */
+			//byArticlesHeader = MobileBy.xpath("//android.widget.FrameLayout[@resource-id='com.weather.Weather:id/video_fragment_container']");
+			articlesHeader = Ad.findElement(byVideoArticleHeader);
+		}
 	}
 
 	@Step("Verify Whether App on Articles Page or Index Content Page")

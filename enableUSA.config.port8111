@@ -249,7 +249,7 @@
                     <location>
                       <protocol>https</protocol>
                       <host>dsx.weather.com</host>
-                      <path>/cms/*/privacy/en_US/twc-ios-flagship/*</path>
+                      <path>/cms/*/privacy/en_US/*/*</path>
                     </location>
                     <enabled>true</enabled>
                   </locationMatch>
@@ -300,7 +300,7 @@
                   <matchRequest>false</matchRequest>
                   <matchResponse>true</matchResponse>
                   <newHeader>twc-geoip-region</newHeader>
-                  <newValue>WA</newValue>
+                  <newValue>GA</newValue>
                   <newHeaderRegex>false</newHeaderRegex>
                   <newValueRegex>false</newValueRegex>
                   <matchWholeValue>false</matchWholeValue>

@@ -40,6 +40,14 @@ public class AddressScreen extends Utils {
 	String buttonLocationManagementClear_AccessibilityId = "button_locationManagementClear";
 	String oK_AccessibilityId = "OK";
 	
+	String clearRecentLocations_Xpath = "(//XCUIElementTypeButton[@name='button_locationManagementClear'])[1]";
+	String clearAllYourRecentsAlert_Xpath = "//XCUIElementTypeAlert[@name='Clear all your recents?']";
+	String clearAllLocationsOK_Xpath = "//XCUIElementTypeButton[@name='OK']";
+	String clearAllLocationsCancel_Xpath = "//XCUIElementTypeButton[@name='Cancel']";
+	
+	
+	
+	
 	By bySearchForYourLocation = MobileBy.xpath(searchForYourLocation_Xpath);
 	By byCurrentLocation = MobileBy.AccessibilityId(currentLocation_AccessibilityId);
 	By byCurrentLocation2 = MobileBy.AccessibilityId(currentLocation2_AccessibilityId);
@@ -55,8 +63,13 @@ public class AddressScreen extends Utils {
 	By byNeverLocation = MobileBy.xpath(neverLocation_Xpath);
 	By byReturnToTheWeather = MobileBy.AccessibilityId(returnToTheWeather_AccessibilityId);
 	By byLabelCurrentLocation = MobileBy.id(labelCurrentLocation_Id);
-	By byButtonLocationManagementClear = MobileBy.id(buttonLocationManagementClear_AccessibilityId);
-	By byOK = MobileBy.id(oK_AccessibilityId);
+	By byButtonLocationManagementClear = MobileBy.AccessibilityId(buttonLocationManagementClear_AccessibilityId);
+	By byOK = MobileBy.AccessibilityId(oK_AccessibilityId);
+	
+	By byClearRecentLocations = MobileBy.xpath(clearRecentLocations_Xpath);
+	By byClearAllYourRecentsAlert = MobileBy.xpath(clearAllYourRecentsAlert_Xpath);
+	By byClearAllLocationsOK = MobileBy.xpath(clearAllLocationsOK_Xpath);
+	By byClearAllLocationsCancel = MobileBy.xpath(clearAllLocationsCancel_Xpath);
 	
 	
 	MobileElement searchForYourLocation = null;
@@ -80,6 +93,11 @@ public class AddressScreen extends Utils {
 	MobileElement oKButton = null;
 	MobileElement alwaysAllow = null;
 	MobileElement allowWhileUsingApp = null;
+	
+	MobileElement clearRecentLocations = null;
+	MobileElement clearAllYourRecentsAlert = null;
+	MobileElement clearAllLocationsOK = null;
+	MobileElement clearAllLocationsCancel = null;
 
 	public AddressScreen(AppiumDriver<MobileElement> Ad) {
 		this.Ad = Ad;
@@ -994,19 +1012,34 @@ public class AddressScreen extends Utils {
 	}
 
 	@Step("Clear added addresses")
-	public void clearAddedAddresses() {
-		try {
-			//MobileElement el1 = (MobileElement) Ad.findElementByAccessibilityId("button_locationManagementClear");
-			//el1.click();
-			buttonLocationManagementClear = Ad.findElement(byButtonLocationManagementClear);
-			TestBase.clickOnElement(byButtonLocationManagementClear, buttonLocationManagementClear, "Location Management Clear Button");
-			//MobileElement el2 = (MobileElement) Ad.findElementByAccessibilityId("OK");
-			//el2.click();
-			oK = Ad.findElement(byOK);
-			TestBase.clickOnElement(byOK, oK, "OK Button");
-		} catch (Exception e) {
+	public void clearAddedAddresses() throws Exception {
+		PresentAddress = Ad.findElement(byCurrentLocation);
+		TestBase.clickOnElement(byCurrentLocation, PresentAddress, "Current Location");
+		System.out.println("Clicked on Present Address");
+		logStep("Clicked on Present Address");
+		TestBase.waitForMilliSeconds(5000);
+		if (TestBase.isElementExists(byButtonLocationManagementClear)) {
+			try {
+				//MobileElement el1 = (MobileElement) Ad.findElementByAccessibilityId("button_locationManagementClear");
+				//el1.click();
+				buttonLocationManagementClear = Ad.findElement(byButtonLocationManagementClear);
+				TestBase.clickOnElement(byButtonLocationManagementClear, buttonLocationManagementClear, "Location Management Clear Button");
+				//MobileElement el2 = (MobileElement) Ad.findElementByAccessibilityId("OK");
+				//el2.click();
+				TestBase.waitForVisibilityOfElementLocated(Ad, 60, byClearAllYourRecentsAlert);
+				oK = Ad.findElement(byOK);
+				TestBase.clickOnElement(byOK, oK, "OK Button");
+			} catch (Exception e) {
+				System.out.println("No Saved addresses are availabe ");
+			}finally {
+				done = Ad.findElement(byDone);
+				TestBase.clickOnElement(byDone, done, "Done Button");
+			}
+			
+		} else {
 			System.out.println("No Saved addresses are availabe ");
 		}
+		
 
 	}
 

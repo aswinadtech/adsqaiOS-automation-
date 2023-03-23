@@ -165,8 +165,6 @@ public class GDPRPrivacyTest extends TwcIosBaseTest {
 		Functions.checkForAppState();
 		Functions.put_Background_launch(15);
 		Functions.checkForAppState();
-		proxy.getXml();
-		Utils.createXMLFileForCharlesSessionFile();
 		hrTab = new HourlyNavTab(Ad);
 		dTab = new DailyNavTab(Ad);
 		hmTab = new HomeNavTab(Ad);
@@ -176,6 +174,12 @@ public class GDPRPrivacyTest extends TwcIosBaseTest {
 		pScreen = new PlanningCardScreen(Ad);
 		sScreen = new SeasonalHubCardScreen(Ad);
 		stScreen = new SettingsScreen(Ad);
+		addrScreen.clearAddedAddresses();
+		TestBase.waitForMilliSeconds(5000);
+		addrScreen.enternewAddress(false, "07095", "Woodbridge, New Jersey");
+		TestBase.waitForMilliSeconds(20000);
+		proxy.getXml();
+		Utils.createXMLFileForCharlesSessionFile();
 	}
 
 	/*
@@ -211,8 +215,8 @@ public class GDPRPrivacyTest extends TwcIosBaseTest {
 	@Description("WFXTrigger Call verification")
 	public void Verify_WFXTriggers_Call_privacy_for_GDPR() throws Exception {
 		System.out.println("==============================================");
-		System.out.println("****** triggers.wfxtriggers.com Call test case Started");
-		logStep("****** triggers.wfxtriggers.com Call test case Started");
+		System.out.println("****** prod.weatherfx.com Call test case Started");
+		logStep("****** prod.weatherfx.com Call test case Started");
 		Utils.verifyAPICal("Smoke", "WFXTrigger", true);
 
 	}

@@ -119,6 +119,7 @@ public class Utils extends Functions {
 			"Evening", "Overnight" };
 	public static LinkedHashMap<String, String> wfxParameters = new LinkedHashMap<String, String>();
 	public static String placeId = null;
+	public static String hlzip = null;
 
 	public enum CardNames {
 		video, today, news, aq, maps, daily
@@ -8356,6 +8357,215 @@ public class Utils extends Functions {
 
 		return ApiParamValue;
 	}
+	
+	/**
+	 * This method returns the parameter value from the corresponding API response
+	 * based on given zipcode.
+	 * 
+	 * @param cust_param
+	 * @param zipCode
+	 * @return
+	 * @throws Exception
+	 */
+	public static String get_param_value_from_APICalls_V2(String cust_param, String zipCode, String constant, String countryCode) throws Exception {
+
+		// readExcelValues.excelValues(excelName, sheetName);
+
+		// Read the content form file
+		File fXmlFile = new File(outfile.getName());
+		listOf_b_Params.clear();
+
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		dbFactory.setValidating(false);
+		dbFactory.setNamespaceAware(true);
+		dbFactory.setFeature("http://xml.org/sax/features/namespaces", false);
+		dbFactory.setFeature("http://xml.org/sax/features/validation", false);
+		dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+		dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+		Document doc = dBuilder.parse(fXmlFile);
+		// Getting the transaction element by passing xpath expression
+		NodeList nodeList = doc.getElementsByTagName("transaction");
+		ReadExcelValues.excelValues("Cust_Param", "PramNaming");
+		int custParamCount = ExcelData.rowcount;
+		// Read JSONs and get b value
+		// List<String> jsonBValuesList = new ArrayList<String>();
+
+		// String slotId = readExcelValues.data[21][Cap];
+
+		// String slotId = "c4dd8ec4-e40c-4a63-ae81-8f756793ac5e";
+
+		boolean flag = false;
+		boolean hflag = false;
+		String ApiParamValue = null;
+		List<String> istofRequestBodies = new ArrayList<String>();
+		List<String> istofResponseBodies = new ArrayList<String>();
+		// List<String> listOf_b_Params = new ArrayList<String>();
+
+		outerloop: for (int i = 0; i < nodeList.getLength(); i++) {
+			if (nodeList.item(i) instanceof Node) {
+				Node node = nodeList.item(i);
+				if (node.hasChildNodes()) {
+					NodeList nl = node.getChildNodes();
+					for (int j = 0; j < nl.getLength(); j++) {
+						Node innernode = nl.item(j);
+						if (innernode != null) {
+
+							if (innernode.getNodeName().equals("request")) {
+								if (innernode.hasChildNodes()) {
+									NodeList n2 = innernode.getChildNodes();
+									for (int k = 0; k < n2.getLength(); k++) {
+										Node innernode2 = n2.item(k);
+										if (innernode2 != null) {
+											if (innernode2.getNodeType() == Node.ELEMENT_NODE) {
+												Element eElement = (Element) innernode2;
+												if (eElement.getNodeName().equals("headers")) {
+													if (innernode2.hasChildNodes()) {
+														NodeList n3 = innernode2.getChildNodes();
+														for (int q = 0; q < n3.getLength(); q++) {
+															// System.out.println("node3 length is:
+															// "+n3.getLength());
+															Node innernode3 = n3.item(q);
+															if (innernode3 != null) {
+																// System.out.println("Innernode3 name is:
+																// "+innernode3.getNodeName());
+																if (innernode3.getNodeType() == Node.ELEMENT_NODE) {
+																	Element eElement1 = (Element) innernode3;
+																	// System.out.println("Innernode3 element name
+																	// is: "+eElement1.getNodeName());
+																	if (eElement1.getNodeName().equals("header")) {
+																		String content = eElement1.getTextContent();
+																		// System.out.println("request body
+																		// "+content);
+
+																		for (int paramtype = 1; paramtype <= custParamCount; paramtype++) {
+																			if (cust_param.equals(
+																					ReadExcelValues.data[paramtype][0])
+																					&& content.contains(
+																							ReadExcelValues.data[paramtype][3])) {
+																				flag = true;
+																				break;
+																			}
+																		}
+																	}
+
+																	// this condition especially for android since its
+																	// file has path value under first-line element
+																	if (eElement1.getNodeName().equals("first-line")) {
+																		String content = eElement1.getTextContent();
+																		// System.out.println("request body
+																		// "+content);
+
+																		for (int paramtype = 1; paramtype <= custParamCount; paramtype++) {
+																			if (cust_param.equals(
+																					ReadExcelValues.data[paramtype][0])
+																					&& content.contains(
+																							ReadExcelValues.data[paramtype][3])) {
+																				flag = true;
+																				break;
+																			}
+																		}
+																	}
+
+																}
+															}
+														}
+													}
+												}
+
+											}
+										}
+									}
+								}
+							}
+
+							if (flag) {
+								if (innernode.getNodeName().equals("response")) {
+									// System.out.println(innernode.getNodeName());
+									if (innernode.hasChildNodes()) {
+										NodeList n2 = innernode.getChildNodes();
+										for (int k = 0; k < n2.getLength(); k++) {
+											Node innernode2 = n2.item(k);
+											if (innernode2 != null) {
+												if (innernode2.getNodeType() == Node.ELEMENT_NODE) {
+													Element eElement = (Element) innernode2;
+													if (eElement.getNodeName().equals("body")) {
+														String content = eElement.getTextContent();
+														String[] JsonValues = null;
+														String JsonParam = null;
+
+														for (int paramtype = 1; paramtype <= custParamCount; paramtype++) {
+															if (cust_param.equals(ReadExcelValues.data[paramtype][0])) {
+																if (ReadExcelValues.data[paramtype][2].contains(",")) {
+																	JsonValues = ReadExcelValues.data[paramtype][2]
+																			.split(",");
+																	JsonParam = JsonValues[0].trim();
+
+																} /*
+																	 * else
+																	 * if(readExcelValues.data[paramtype][2].contains(
+																	 * "direct")) { //mainTag = (JSONObject) obj; }
+																	 */else {
+																	JsonParam = ReadExcelValues.data[paramtype][2]
+																			.trim();
+																	// mainTag = (JSONObject) jsonObject.get(JsonParam);
+																}
+																break;
+															}
+														}
+
+														if (content.contains(JsonParam)) {
+															// content.replaceAll(":null", ":nl");
+															// flag = true;
+															// istofRequestBodies.add(content);
+															// System.out.println("request body " + content);
+															// ApiParamValue = getValueFromJsonResponseBody(content,
+															// jsonParam,jsonNode);
+															ApiParamValue = get_Expected_Value_From_APIResponseBody_V2(
+																	"Cust_Param", "PramNaming", zipCode, cust_param,
+																	content, constant, countryCode);
+															break outerloop;
+
+															/*
+															 * JSONParser parser = new JSONParser();
+															 * //System.out.println("adreq1 is : "+adreq1.toString());
+															 * Object obj = parser.parse(new String(content)); String
+															 * JsonParam="v3-wx-observations-current"; JSONObject
+															 * jsonObject = (JSONObject) obj; JSONObject mainTag =
+															 * (JSONObject) jsonObject.get(JsonParam);
+															 * //System.out.println("obj : "+obj);
+															 * 
+															 * String ApiParamValue= mainTag.get("iconCode").toString();
+															 * System.out.println("value is "+ApiParamValue);
+															 */
+
+														}
+														/*
+														 * istofResponseBodies.add(content); String tempBparam =
+														 * get_b_value_inJsonResponseBody(content); if
+														 * (!"".contentEquals(tempBparam)) {
+														 * listOf_b_Params.add(tempBparam); }
+														 */
+														// System.out.println("response body "+content);
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+
+						}
+					}
+				}
+			}
+			flag = false;
+		}
+
+		return ApiParamValue;
+	}
 
 	/**
 	 * This method gets the parameter value from the corresponding API response
@@ -8572,6 +8782,213 @@ public class Utils extends Functions {
 		wfxParameters.put(cust_param, ApiParamValue);
 		System.out.println("wfxParameters are: " + wfxParameters);
 	}
+	
+	public static void load_param_value_from_APICalls_V2(String cust_param, String zipCode, boolean clearMap, String constant, String countryCode)
+			throws Exception {
+
+		// readExcelValues.excelValues(excelName, sheetName);
+
+		// Read the content form file
+		File fXmlFile = new File(outfile.getName());
+
+		if (clearMap) {
+			wfxParameters.clear();
+
+		}
+
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		dbFactory.setValidating(false);
+		dbFactory.setNamespaceAware(true);
+		dbFactory.setFeature("http://xml.org/sax/features/namespaces", false);
+		dbFactory.setFeature("http://xml.org/sax/features/validation", false);
+		dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+		dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+		Document doc = dBuilder.parse(fXmlFile);
+		// Getting the transaction element by passing xpath expression
+		NodeList nodeList = doc.getElementsByTagName("transaction");
+		ReadExcelValues.excelValues("Cust_Param", "PramNaming");
+		int custParamCount = ExcelData.rowcount;
+		// Read JSONs and get b value
+		// List<String> jsonBValuesList = new ArrayList<String>();
+
+		// String slotId = readExcelValues.data[21][Cap];
+
+		// String slotId = "c4dd8ec4-e40c-4a63-ae81-8f756793ac5e";
+
+		boolean flag = false;
+		boolean hflag = false;
+		String ApiParamValue = null;
+		List<String> istofRequestBodies = new ArrayList<String>();
+		List<String> istofResponseBodies = new ArrayList<String>();
+		// List<String> listOf_b_Params = new ArrayList<String>();
+
+		outerloop: for (int i = 0; i < nodeList.getLength(); i++) {
+			if (nodeList.item(i) instanceof Node) {
+				Node node = nodeList.item(i);
+				if (node.hasChildNodes()) {
+					NodeList nl = node.getChildNodes();
+					for (int j = 0; j < nl.getLength(); j++) {
+						Node innernode = nl.item(j);
+						if (innernode != null) {
+
+							if (innernode.getNodeName().equals("request")) {
+								if (innernode.hasChildNodes()) {
+									NodeList n2 = innernode.getChildNodes();
+									for (int k = 0; k < n2.getLength(); k++) {
+										Node innernode2 = n2.item(k);
+										if (innernode2 != null) {
+											if (innernode2.getNodeType() == Node.ELEMENT_NODE) {
+												Element eElement = (Element) innernode2;
+												if (eElement.getNodeName().equals("headers")) {
+													if (innernode2.hasChildNodes()) {
+														NodeList n3 = innernode2.getChildNodes();
+														for (int q = 0; q < n3.getLength(); q++) {
+															// System.out.println("node3 length is:
+															// "+n3.getLength());
+															Node innernode3 = n3.item(q);
+															if (innernode3 != null) {
+																// System.out.println("Innernode3 name is:
+																// "+innernode3.getNodeName());
+																if (innernode3.getNodeType() == Node.ELEMENT_NODE) {
+																	Element eElement1 = (Element) innernode3;
+																	// System.out.println("Innernode3 element name
+																	// is: "+eElement1.getNodeName());
+																	if (eElement1.getNodeName().equals("header")) {
+																		String content = eElement1.getTextContent();
+																		//System.out.println("request body "+content);
+
+																		for (int paramtype = 1; paramtype <= custParamCount; paramtype++) {
+																			if (cust_param.equals(
+																					ReadExcelValues.data[paramtype][0])
+																					&& content.contains(
+																							ReadExcelValues.data[paramtype][3])) {
+																				System.out.println("request body "+content);
+																				flag = true;
+																				break;
+																			}
+																		}
+																	}
+
+																	// this condition especially for android since its
+																	// file has path value under first-line element
+																	if (eElement1.getNodeName().equals("first-line")) {
+																		String content = eElement1.getTextContent();
+																		 //System.out.println("request body "+content);
+
+																		for (int paramtype = 1; paramtype <= custParamCount; paramtype++) {
+																			if (cust_param.equals(
+																					ReadExcelValues.data[paramtype][0])
+																					&& content.contains(
+																							ReadExcelValues.data[paramtype][3])) {
+																				System.out.println("request body "+content);
+																				flag = true;
+																				break;
+																			}
+																		}
+																	}
+
+																}
+															}
+														}
+													}
+												}
+
+											}
+										}
+									}
+								}
+							}
+
+							if (flag) {
+								if (innernode.getNodeName().equals("response")) {
+									// System.out.println(innernode.getNodeName());
+									if (innernode.hasChildNodes()) {
+										NodeList n2 = innernode.getChildNodes();
+										for (int k = 0; k < n2.getLength(); k++) {
+											Node innernode2 = n2.item(k);
+											if (innernode2 != null) {
+												if (innernode2.getNodeType() == Node.ELEMENT_NODE) {
+													Element eElement = (Element) innernode2;
+													if (eElement.getNodeName().equals("body")) {
+														String content = eElement.getTextContent();
+														String[] JsonValues = null;
+														String JsonParam = null;
+
+														for (int paramtype = 1; paramtype <= custParamCount; paramtype++) {
+															if (cust_param.equals(ReadExcelValues.data[paramtype][0])) {
+																if (ReadExcelValues.data[paramtype][2].contains(",")) {
+																	JsonValues = ReadExcelValues.data[paramtype][2]
+																			.split(",");
+																	JsonParam = JsonValues[0].trim();
+
+																} /*
+																	 * else
+																	 * if(readExcelValues.data[paramtype][2].contains(
+																	 * "direct")) { //mainTag = (JSONObject) obj; }
+																	 */else {
+																	JsonParam = ReadExcelValues.data[paramtype][2]
+																			.trim();
+																	// mainTag = (JSONObject) jsonObject.get(JsonParam);
+																}
+																break;
+															}
+														}
+
+														if (content.contains(JsonParam)) {
+															// content.replaceAll(":null", ":nl");
+															// flag = true;
+															// istofRequestBodies.add(content);
+															// System.out.println("request body " + content);
+															// ApiParamValue = getValueFromJsonResponseBody(content,
+															// jsonParam,jsonNode);
+															ApiParamValue = get_Expected_Value_From_APIResponseBody_V2(
+																	"Cust_Param", "PramNaming", zipCode, cust_param,
+																	content, constant, countryCode);
+															break outerloop;
+
+															/*
+															 * JSONParser parser = new JSONParser();
+															 * //System.out.println("adreq1 is : "+adreq1.toString());
+															 * Object obj = parser.parse(new String(content)); String
+															 * JsonParam="v3-wx-observations-current"; JSONObject
+															 * jsonObject = (JSONObject) obj; JSONObject mainTag =
+															 * (JSONObject) jsonObject.get(JsonParam);
+															 * //System.out.println("obj : "+obj);
+															 * 
+															 * String ApiParamValue= mainTag.get("iconCode").toString();
+															 * System.out.println("value is "+ApiParamValue);
+															 */
+
+														}
+														/*
+														 * istofResponseBodies.add(content); String tempBparam =
+														 * get_b_value_inJsonResponseBody(content); if
+														 * (!"".contentEquals(tempBparam)) {
+														 * listOf_b_Params.add(tempBparam); }
+														 */
+														// System.out.println("response body "+content);
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+
+						}
+					}
+				}
+			}
+			flag = false;
+		}
+
+		// return ApiParamValue;
+		wfxParameters.put(cust_param, ApiParamValue);
+		System.out.println("wfxParameters are: " + wfxParameters);
+	}
 
 	/**
 	 * Load weatherfx api parameeter values to a map by zip code
@@ -8579,11 +8996,21 @@ public class Utils extends Functions {
 	 * @throws Exception
 	 */
 	public static void loadWeatherFXAPIParameterValuestoMap_ByZipCode(String zipCode) throws Exception {
-		Utils.load_param_value_from_APICalls("wfxtg", zipCode, false);
-		Utils.load_param_value_from_APICalls("cxtg", zipCode, false);
-		Utils.load_param_value_from_APICalls("zcs", zipCode, false);
-		Utils.load_param_value_from_APICalls("hzcs", zipCode, false);
-		Utils.load_param_value_from_APICalls("nzcs", zipCode, false);
+		
+		if (Ad instanceof AndroidDriver<?>) {
+			Utils.load_param_value_from_APICalls("wfxtg", zipCode, false);
+			Utils.load_param_value_from_APICalls("cxtg", zipCode, false);
+			Utils.load_param_value_from_APICalls("zcs", zipCode, false);
+			Utils.load_param_value_from_APICalls("hzcs", zipCode, false);
+			Utils.load_param_value_from_APICalls("nzcs", zipCode, false);
+		} else {
+			Utils.load_param_value_from_APICalls_V2("wfxtg", Utils.hlzip, false, "4", "US");
+			Utils.load_param_value_from_APICalls_V2("cxtg", zipCode, false, "4", "US");
+			Utils.load_param_value_from_APICalls_V2("zcs", zipCode, false, "4", "US");
+			Utils.load_param_value_from_APICalls_V2("hzcs", Utils.hlzip, false, "4", "US");
+			Utils.load_param_value_from_APICalls_V2("nzcs", zipCode, false, "4", "US");
+		}
+		
 
 	}
 
@@ -8787,7 +9214,7 @@ public class Utils extends Functions {
 	 */
 	public static String get_Expected_Value_From_APIResponseBody(String Excelname, String sheetName, String zipCode,
 			String cust_param, String apiData) throws Exception {
-
+		 System.out.println("Api Data Sting format is : "+apiData);
 		ReadExcelValues.excelValues(Excelname, sheetName);
 		JSONParser parser = new JSONParser();
 		// System.out.println("adreq1 is : "+adreq1.toString());
@@ -9043,6 +9470,279 @@ public class Utils extends Functions {
 		}
 		return ApiParamValue;
 	}
+	
+	public static String get_Expected_Value_From_APIResponseBody_V2(String Excelname, String sheetName, String zipCode, String cust_param, 
+			 String apiData, String constant, String countryCode) throws Exception {
+		 System.out.println("Api Data Sting format is : "+apiData);
+		ReadExcelValues.excelValues(Excelname, sheetName);
+		JSONParser parser = new JSONParser();
+		// System.out.println("adreq1 is : "+adreq1.toString());
+		Object obj = parser.parse(new String(apiData));
+		// System.out.println("obj : "+obj);
+		JSONObject jsonObject = (JSONObject) obj;
+		String ApiParams = null;
+		String ApiParamValue = null;
+		String paramName = null;
+		String JsonValues[] = null;
+		String JsonParam = null;
+
+		JSONObject mainTag = null;
+		int custParamCount = ExcelData.rowcount;
+
+		for (int paramtype = 1; paramtype <= custParamCount; paramtype++) {
+			if (cust_param.equals(ReadExcelValues.data[paramtype][0])) {
+
+				if (ReadExcelValues.data[paramtype][Cap].toString().equals("hardcode")) {
+					System.out.println("Param type is Hard Code");
+				} else {
+					System.out.println("main tag is : " + ReadExcelValues.data[paramtype][2] + ", param type is : "
+							+ ReadExcelValues.data[paramtype][Cap]);
+					if (ReadExcelValues.data[paramtype][2].contains("direct")) {
+						mainTag = (JSONObject) obj;
+					} else if (ReadExcelValues.data[paramtype][2].contains(",")) {
+						JsonValues = ReadExcelValues.data[paramtype][2].split(",");
+						JsonParam = JsonValues[0].trim();
+						mainTag = (JSONObject) jsonObject.get(JsonParam);
+						try {
+							if (cust_param.equalsIgnoreCase("wfxtg") || cust_param.equalsIgnoreCase("cxtg")
+									|| cust_param.equalsIgnoreCase("nzcs") || cust_param.equalsIgnoreCase("zcs")
+									|| cust_param.equalsIgnoreCase("hzcs")) {
+								mainTag = (JSONObject) mainTag.get(JsonValues[1].trim()+":"+zipCode+":"+constant+":"+countryCode);
+							} else {
+								mainTag = (JSONObject) mainTag.get(JsonValues[1].trim());
+							}
+							
+						} catch (Exception e) {
+							if (cust_param.equalsIgnoreCase("fcnd") || cust_param.equalsIgnoreCase("fdynght")) {
+								JSONArray eleArray = (JSONArray) mainTag.get(JsonValues[1].trim());
+								/*
+								 * Note that, this JSONArray has only one json object in it, hence loop ends
+								 * after one iteration.
+								 */
+								ArrayList<String> Ingredients_names = new ArrayList<>();
+								for (int i = 0; i < eleArray.size(); i++) {
+									String arrayElement = String.valueOf(eleArray.get(i));
+
+									Ingredients_names.add(arrayElement);
+									obj = parser.parse(new String(arrayElement));
+									jsonObject = (JSONObject) obj;
+									mainTag = (JSONObject) obj;
+									String[] arEls = arrayElement.split(",");
+								}
+								// System.out.println(Ingredients_names);
+							} else if (cust_param.equalsIgnoreCase("cxtg") || cust_param.equalsIgnoreCase("zcs")
+									|| cust_param.equalsIgnoreCase("hzcs") || cust_param.equalsIgnoreCase("nzcs")) {
+								JSONArray eleArray = (JSONArray) mainTag.get(JsonValues[1].trim());
+								/*
+								 * Generally Scatteredtags returns 3 objects, zcs, hzcs and nzcs in order in
+								 * turn each object zcs, hzcs and nzcs is an array of json objects
+								 */
+								ArrayList<String> Ingredients_names = new ArrayList<>();
+								// String arrayElement="";
+								outerloop: for (int i = 0; i < eleArray.size(); i++) {
+									String arrayElement = String.valueOf(eleArray.get(i));
+
+									Ingredients_names.add(arrayElement);
+									obj = parser.parse(new String(arrayElement));
+									jsonObject = (JSONObject) obj;
+									mainTag = (JSONObject) obj;
+
+									try {
+										/*
+										 * since same block being used for cxtg, zcs, hzcs and nzcs, there are
+										 * possibilities that we may get null value in first iteration for hzcs and nzcs
+										 * as these are elements of second object onwards, hence exception. so when we
+										 * get exception continuing to next iteration
+										 */
+										JSONArray eleArrays = (JSONArray) mainTag.get(JsonValues[2].trim());
+										ArrayList<String> Ingredients_namess = new ArrayList<>();
+										// String[] arEls = arrayElement.split(",");
+										for (int j = 0; j < eleArrays.size(); j++) {
+											String arrayElementt = String.valueOf(eleArrays.get(j));
+
+											Ingredients_namess.add(arrayElementt);
+											obj = parser.parse(new String(arrayElementt));
+											jsonObject = (JSONObject) obj;
+											mainTag = (JSONObject) obj;
+											String zip = "";
+											try {
+												zip = String.valueOf(mainTag.get("zip"));
+
+											} catch (Exception e1) {
+												System.out.println("An Exception while fetching zip value");
+												logStep("An Exception while fetching zip value");
+											}
+											/*
+											 * since the parameters are mapped to respective zip codes and selection to
+											 * be based on zip code, hence zip code comparision introduced
+											 */
+											if (zip.equalsIgnoreCase(zipCode)) {
+
+												break outerloop;
+											} else {
+												/*
+												 * this else block is written to check whether zip code found in json
+												 * objects. if not printing a log message, as the exception being
+												 * automatically handled and returns null value in the step JSONArray
+												 * arrayElementValues = (JSONArray)
+												 * mainTag.get(readExcelValues.data[paramtype][Cap]);
+												 */
+												if (j == eleArrays.size() - 1) {
+													System.out.println("Expected Zip Code :" + zipCode
+															+ " not found in JSON Array Objects, during custom parameter "
+															+ cust_param + " validation.");
+													logStep("Expected Zip Code :" + zipCode
+															+ " not found in JSON Array Objects, during custom parameter "
+															+ cust_param + " validation.");
+													mainTag = null;
+												}
+											}
+
+										}
+										break outerloop;
+									} catch (Exception e2) {
+										continue;
+									}
+
+								}
+
+							}
+
+						}
+
+					} else {
+						JsonParam = ReadExcelValues.data[paramtype][2].trim();
+						mainTag = (JSONObject) jsonObject.get(JsonParam);
+					}
+
+					if (cust_param.equalsIgnoreCase("fcnd") || cust_param.equalsIgnoreCase("fdynght")) {
+						JSONArray dayPartElementValues = (JSONArray) mainTag.get(ReadExcelValues.data[paramtype][Cap]);
+						if (String.valueOf(dayPartElementValues.get(0)).equalsIgnoreCase("null")) {
+							ApiParamValue = String.valueOf(dayPartElementValues.get(1));
+						} else {
+							ApiParamValue = String.valueOf(dayPartElementValues.get(0));
+						}
+
+					} else {
+						try {
+							/*
+							 * Here this will try to get the parameter values into jSON Array when it doesnt
+							 * find any parameter it is expected, for ex: it is not seen xcurrent in json
+							 * response then it returns 'null' to arrayElementValues. and continues in this
+							 * try block to get ApiParamValue if jSON array doesnt exist then an exception
+							 * while getting the ApiParamValue. it goes to catch block to see if it is a
+							 * String
+							 * 
+							 */
+							JSONArray arrayElementValues = (JSONArray) mainTag
+									.get(ReadExcelValues.data[paramtype][Cap]);
+							
+							/*
+							 * Certain custom parameters needed single element out of array and certain
+							 * parameters needed complete array
+							 */
+
+							if (cust_param.equalsIgnoreCase("wfxtg") || cust_param.equalsIgnoreCase("cxtg")
+									|| cust_param.equalsIgnoreCase("nzcs") || cust_param.equalsIgnoreCase("zcs")
+									|| cust_param.equalsIgnoreCase("hzcs")) {
+								if (arrayElementValues.isEmpty()) {
+									ApiParamValue = "nl";
+								} else {
+									ApiParamValue = StringUtils.jSONArrayToString(arrayElementValues);
+								}
+								
+
+							} else {
+								ApiParamValue = String.valueOf(arrayElementValues.get(0));
+							}
+
+						} catch (Exception e) {
+							try {
+								/*
+								 * wfxtg and cxtg parameters use encoded values 'xcurrent' and 'xcxtg'
+								 * respectively. these are strings only where other parameters of trigger call
+								 * are arrays.
+								 * 
+								 */
+								/*
+								 * Here this will try to get the parameter values into String when it doesnt
+								 * find any parameter it is expected, for ex: it is not seen xcurrent in json
+								 * response then it returns 'null' to ApiParamValue, without any exception for
+								 * nonexisting parameter. at the end null value will be set to 'nl'
+								 * 
+								 */
+								
+								ApiParamValue = String.valueOf(mainTag.get(ReadExcelValues.data[paramtype][Cap]));
+								
+							} catch (Exception e3) {
+								/*
+								 * This is handled because for cxtg, zcs, hzcs and nzcs if the expected zip code
+								 * is not there then throwing an exception and setting ApiParamValue to nl
+								 */
+								ApiParamValue = "nl";
+							}
+						}
+
+					}
+
+					if (cust_param.equalsIgnoreCase("tmpc")) {
+						int fahrenheit = Integer.parseInt(ApiParamValue);
+						int celsius = ((fahrenheit - 32) * 5) / 9;
+						ApiParamValue = String.valueOf(celsius);
+					} else if (cust_param.equalsIgnoreCase("fltmpc")) {
+						int fahrenheit = Integer.parseInt(ApiParamValue);
+						int celsius = ((fahrenheit - 32) * 5) / 9;
+						ApiParamValue = String.valueOf(celsius);
+					}
+					// ApiParamValue= mainTag.get(readExcelValues.data[paramtype][Cap]).toString();
+
+					if (ReadExcelValues.data[paramtype][Cap].toString().equalsIgnoreCase("icon")) {
+						paramName = "cnd";
+					} else {
+						paramName = ReadExcelValues.data[paramtype][0].toString();
+					}
+					// ads.add(ApiParams);
+					if (ReadExcelValues.data[paramtype][4].toString().equalsIgnoreCase("Yes")) {
+						ReadExcelValues.excelValues("Cust_Param_Result", cust_param);
+
+						for (int CustParamValues = 1; CustParamValues <= ExcelData.rowcount; CustParamValues++) {
+							if (ReadExcelValues.data[CustParamValues][1].contains("and more")) {
+								String CellParam = ReadExcelValues.data[CustParamValues][1].toString();
+								CellParam = CellParam.replaceAll("and more", "");
+								CellParam = CellParam.replaceAll(" ", "");
+								int celparamValue = Integer.parseInt(CellParam);
+								int ApiParamNumber = Integer.parseInt(ApiParamValue);
+								if (ApiParamNumber >= celparamValue) {
+									ApiParamValue = ReadExcelValues.data[CustParamValues][2].toString();
+									break;
+								}
+							} else if (ReadExcelValues.data[CustParamValues][1].contains("and less")) {
+								String CellParam = ReadExcelValues.data[CustParamValues][1].toString();
+								CellParam = CellParam.replaceAll("and less", "");
+								CellParam = CellParam.replaceAll(" ", "");
+								int celparamValue = Integer.parseInt(CellParam);
+								int ApiParamNumber = Integer.parseInt(ApiParamValue);
+								if (ApiParamNumber <= celparamValue) {
+									ApiParamValue = ReadExcelValues.data[CustParamValues][2].toString();
+									break;
+								}
+							} else if (ReadExcelValues.data[CustParamValues][1].contains(ApiParamValue)) {
+								ApiParamValue = ReadExcelValues.data[CustParamValues][2].toString();
+								break;
+							}
+						}
+					}
+					ApiParams = paramName + "=" + ApiParamValue;
+					break;
+				}
+			}
+		}
+		System.out.println(cust_param + " Param Values from API Call is : " + ApiParamValue);
+		if (ApiParamValue.equalsIgnoreCase("null")) {
+			ApiParamValue = "nl";
+		}
+		return ApiParamValue;
+	}
 
 	/**
 	 * Get custom parameter value of gampad call
@@ -9097,6 +9797,8 @@ public class Utils extends Functions {
 		if (cust_param.equalsIgnoreCase("fcnd")) {
 			iuId = ReadExcelValues.data[18][Cap];
 			iuId = iuId.concat("_") + today;
+		} else if (sheetName.equalsIgnoreCase("PreRollVideo")) {
+			iuId = videoIUValue;
 		} else {
 			iuId = ReadExcelValues.data[18][Cap];
 		}
@@ -9603,6 +10305,9 @@ public class Utils extends Functions {
 		 * the week abbreviated String today = simpleDateformat.format(d); today =
 		 * today.toLowerCase().concat("1");
 		 */
+		if (cust_param.equalsIgnoreCase("wfxtg") || cust_param.equalsIgnoreCase("hzcs")) {
+			zipCode = Utils.hlzip;
+		}
 		String today = null;
 
 		boolean adCallFound = false;
@@ -9637,11 +10342,21 @@ public class Utils extends Functions {
 					|| cust_param.equalsIgnoreCase("nzcs")) {
 				expected = wfxParameters.get(cust_param);
 			} else {
-				expected = get_param_value_from_APICalls(cust_param, zipCode);
+				if (Ad instanceof AndroidDriver<?>) {
+					expected = get_param_value_from_APICalls(cust_param, zipCode);
+				} else {
+					expected = get_param_value_from_APICalls_V2(cust_param, zipCode, "4", "US");
+				}
+				
 			}
 
 		} else {
-			expected = get_param_value_from_APICalls(cust_param, zipCode);
+			if (Ad instanceof AndroidDriver<?>) {
+				expected = get_param_value_from_APICalls(cust_param, zipCode);
+			} else {
+				expected = get_param_value_from_APICalls_V2(cust_param, zipCode, "4", "US");
+			}
+			
 		}
 
 		/*

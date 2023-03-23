@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><?charles serialisation-version='2.0' ?><configuration>
+<?xml version='1.0' encoding='UTF-8' ?>
+<?charles serialisation-version='2.0' ?>
+<configuration>
   <proxyConfiguration>
     <enableSOCKSProxy>false</enableSOCKSProxy>
     <dynamicHTTPPort>false</dynamicHTTPPort>
@@ -83,7 +85,7 @@
           <active>false</active>
           <requiresAuthentication>false</requiresAuthentication>
           <port>0</port>
-          </mutableExternalProxyConfiguration>
+        </mutableExternalProxyConfiguration>
       </entry>
       <entry>
         <string>https</string>
@@ -120,6 +122,12 @@
     <checkUpdates>false</checkUpdates>
     <maximised>false</maximised>
     <fullscreen>false</fullscreen>
+    <mainWindow>
+      <x>20</x>
+      <y>48</y>
+      <width>900</width>
+      <height>694</height>
+    </mainWindow>
     <lastCheckUpdates>2017-06-30 06:35:41.478 UTC</lastCheckUpdates>
   </startupConfiguration>
   <userInterfaceConfiguration>
@@ -147,7 +155,12 @@
         <boolean>true</boolean>
       </entry>
     </warningsSeen>
-    <properties/>     
+    <properties>
+      <entry>
+        <string>NavigatorJTable.TABLE_COLUMN_STATES</string>
+        <columnStates/>
+      </entry>
+    </properties>
   </userInterfaceConfiguration>
   <registrationConfiguration>
     <name>The Weather Company, An IBM Business</name>
@@ -195,12 +208,89 @@
         </portForwarding>
       </entry>
       <entry>
+        <string>Viewer Mappings</string>
+        <viewerMappings>
+          <toolEnabled>false</toolEnabled>
+          <mappings/>
+        </viewerMappings>
+      </entry>
+      <entry>
         <string>Rewrite</string>
         <rewrite>
           <toolEnabled>false</toolEnabled>
           <debugging>false</debugging>
-          
-        <sets><rewriteSet><hosts><locationPatterns><locationMatch><location><protocol>https</protocol><host>dsx.weather.com</host><path>/cms/*/privacy/en_US/*/*</path></location><enabled>true</enabled></locationMatch></locationPatterns></hosts><rules><rewriteRule><active>true</active><ruleType>3</ruleType><matchRequest>false</matchRequest><matchResponse>true</matchResponse><matchHeader>twc-privacy</matchHeader><matchHeaderRegex>false</matchHeaderRegex><matchValue>[A-Za-z0-9\.\-]+</matchValue><matchValueRegex>true</matchValueRegex><matchWholeValue>false</matchWholeValue><caseSensitive>false</caseSensitive><newHeader>twc-privacy</newHeader><newHeaderRegex>false</newHeaderRegex><newValue>usa</newValue><newValueRegex>false</newValueRegex><replaceType>1</replaceType></rewriteRule><rewriteRule><active>true</active><ruleType>3</ruleType><matchRequest>false</matchRequest><matchResponse>true</matchResponse><matchHeader>twc-geoip-country</matchHeader><matchHeaderRegex>false</matchHeaderRegex><matchValue>[A-Za-z0-9\.\-]+</matchValue><matchValueRegex>true</matchValueRegex><matchWholeValue>false</matchWholeValue><caseSensitive>false</caseSensitive><newHeader>twc-geoip-country</newHeader><newHeaderRegex>false</newHeaderRegex><newValue>US</newValue><newValueRegex>false</newValueRegex><replaceType>1</replaceType></rewriteRule><rewriteRule><active>true</active><ruleType>3</ruleType><matchRequest>false</matchRequest><matchResponse>true</matchResponse><matchHeader>twc-geoip-region</matchHeader><matchHeaderRegex>false</matchHeaderRegex><matchValue>[A-Za-z0-9\.\-]+</matchValue><matchValueRegex>true</matchValueRegex><matchWholeValue>false</matchWholeValue><caseSensitive>false</caseSensitive><newHeader>twc-geoip-region</newHeader><newHeaderRegex>false</newHeaderRegex><newValue>WA</newValue><newValueRegex>false</newValueRegex><replaceType>1</replaceType></rewriteRule></rules><active>true</active><name>GeneratedSet</name></rewriteSet></sets></rewrite>
+          <sets>
+            <rewriteSet>
+              <active>true</active>
+              <name>GeneratedSet</name>
+              <hosts>
+                <locationPatterns>
+                  <locationMatch>
+                    <location>
+                      <protocol>https</protocol>
+                      <host>dsx.weather.com</host>
+                      <path>/cms/v5/privacy/en_US/*/*</path>
+                    </location>
+                    <enabled>true</enabled>
+                  </locationMatch>
+                </locationPatterns>
+              </hosts>
+              <rules>
+                <rewriteRule>
+                  <active>true</active>
+                  <ruleType>3</ruleType>
+                  <matchHeader>twc-privacy</matchHeader>
+                  <matchValue>[A-Za-z0-9\.\-]+</matchValue>
+                  <matchHeaderRegex>false</matchHeaderRegex>
+                  <matchValueRegex>true</matchValueRegex>
+                  <matchRequest>false</matchRequest>
+                  <matchResponse>true</matchResponse>
+                  <newHeader>twc-privacy</newHeader>
+                  <newValue>usa</newValue>
+                  <newHeaderRegex>false</newHeaderRegex>
+                  <newValueRegex>false</newValueRegex>
+                  <matchWholeValue>false</matchWholeValue>
+                  <caseSensitive>false</caseSensitive>
+                  <replaceType>1</replaceType>
+                </rewriteRule>
+                <rewriteRule>
+                  <active>true</active>
+                  <ruleType>3</ruleType>
+                  <matchHeader>twc-geoip-country</matchHeader>
+                  <matchValue>[A-Za-z0-9\.\-]+</matchValue>
+                  <matchHeaderRegex>false</matchHeaderRegex>
+                  <matchValueRegex>true</matchValueRegex>
+                  <matchRequest>false</matchRequest>
+                  <matchResponse>true</matchResponse>
+                  <newHeader>twc-geoip-country</newHeader>
+                  <newValue>US</newValue>
+                  <newHeaderRegex>false</newHeaderRegex>
+                  <newValueRegex>false</newValueRegex>
+                  <matchWholeValue>false</matchWholeValue>
+                  <caseSensitive>false</caseSensitive>
+                  <replaceType>1</replaceType>
+                </rewriteRule>
+                <rewriteRule>
+                  <active>true</active>
+                  <ruleType>3</ruleType>
+                  <matchHeader>twc-geoip-region</matchHeader>
+                  <matchValue>[A-Za-z0-9\.\-]+</matchValue>
+                  <matchHeaderRegex>false</matchHeaderRegex>
+                  <matchValueRegex>true</matchValueRegex>
+                  <matchRequest>false</matchRequest>
+                  <matchResponse>true</matchResponse>
+                  <newHeader>twc-geoip-region</newHeader>
+                  <newValue>WA</newValue>
+                  <newHeaderRegex>false</newHeaderRegex>
+                  <newValueRegex>false</newValueRegex>
+                  <matchWholeValue>false</matchWholeValue>
+                  <caseSensitive>false</caseSensitive>
+                  <replaceType>1</replaceType>
+                </rewriteRule>
+              </rules>
+            </rewriteSet>
+          </sets>
+        </rewrite>
       </entry>
       <entry>
         <string>Map Local</string>
@@ -291,6 +381,7 @@
     <hideUnvaluedFields>true</hideUnvaluedFields>
     <cacheDescriptors>true</cacheDescriptors>
     <heuristicTTL>300000</heuristicTTL>
+    <descriptors/>
   </protobufConfiguration>
   <gistConfiguration>
     <publishLimit>10</publishLimit>

@@ -406,26 +406,27 @@ public class Functions extends Driver {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 
 		// Capabilities for IOS and Android Based on Selected on Device Selection
-		capabilities.setCapability(ReadExcelValues.data[1][0], ReadExcelValues.data[1][Cap]);
+	//	capabilities.setCapability(ReadExcelValues.data[1][0], ReadExcelValues.data[1][Cap]);
 		capabilities.setCapability(ReadExcelValues.data[2][0], ReadExcelValues.data[2][Cap]);
 		//capabilities.setCapability(ReadExcelValues.data[3][0], ReadExcelValues.data[3][Cap]);
 		capabilities.setCapability(ReadExcelValues.data[3][0], Utils.iOSVersion);
-		capabilities.setCapability(ReadExcelValues.data[5][0], ReadExcelValues.data[5][Cap]);
+	//	capabilities.setCapability(ReadExcelValues.data[5][0], ReadExcelValues.data[5][Cap]);
 		capabilities.setCapability(ReadExcelValues.data[6][0], ReadExcelValues.data[6][Cap]);
 		capabilities.setCapability("automationName", "XCUITest");
 		//capabilities.setCapability(ReadExcelValues.data[7][0], "=" + ReadExcelValues.data[7][Cap]);
 		//capabilities.setCapability(ReadExcelValues.data[7][0], "=" + "iPhone "+"("+ReadExcelValues.data[3][Cap]+") "+"["+Utils.iPhoneUDID+"]");
 		capabilities.setCapability(ReadExcelValues.data[7][0], "=" + "iPhone "+"("+Utils.iOSVersion+") "+"["+Utils.iPhoneUDID+"]");
+	//	capabilities.setCapability("deviceName", "iPhone");
 		//capabilities.setCapability(ReadExcelValues.data[11][0], ReadExcelValues.data[11][Cap]);
 		capabilities.setCapability(ReadExcelValues.data[11][0], Utils.iPhoneUDID);
 		// capabilities.setCapability(readExcelValues.data[7][0],"iPhone");
 		capabilities.setCapability(ReadExcelValues.data[8][0], ReadExcelValues.data[8][Cap]);
-		capabilities.setCapability("noReset", ResetType);
+		capabilities.setCapability("noReset", true);
 		// ipaPath="/Users/apple/Downloads/ads-ios-master/Build/v9.1-int-423464.ipa";
 		// capabilities.setCapability(readExcelValues.data[10][0],
 		// readExcelValues.data[10][Cap]);
 		// capabilities.setCapability("app","/Users/narasimhanukala/git/ads-automation/ios_Smoke_Automation/Build/iPhone_-_Flagship.ipa");
-		capabilities.setCapability(ReadExcelValues.data[12][0], ReadExcelValues.data[12][Cap]);
+		//capabilities.setCapability(ReadExcelValues.data[12][0], ReadExcelValues.data[12][Cap]);
 		capabilities.setCapability(ReadExcelValues.data[13][0], "7200");
 		capabilities.setCapability(ReadExcelValues.data[14][0], true);
 		// capabilities.setCapability(readExcelValues.data[16][0],
@@ -433,16 +434,20 @@ public class Functions extends Driver {
 		capabilities.setCapability("launchTimeout", 60000);
 		capabilities.setCapability("useNewWDA", true);
 		// capabilities.setCapability("--session-override",true);
-		capabilities.setCapability("bundleId", "com.weather.TWC");
-		capabilities.setCapability("xcodeConfigfile",
-				"/Applications/Appium.app/Contents/Resources/app/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent/Config.xcconfig");
+		//capabilities.setCapability("bundleId", "com.weather.TWC");
+		//capabilities.setCapability("xcodeConfigfile",
+		//		"/Applications/Appium.app/Contents/Resources/app/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent/Config.xcconfig");
 		// capabilities.setCapability("xcodeSigningId","iPhone Developer");
 		// capabilities.setCapability("locationServicesEnabled", false);
-		capabilities.setCapability("realDeviceLogger", "/Users/apple/node_modules/deviceconsole");
+		//capabilities.setCapability("realDeviceLogger", "/Users/apple/node_modules/deviceconsole");
 		capabilities.setCapability("wdaLocalPort", "7403");
 		// capabilities.setCapability("locationServicesAuthorized", true);
 		// capabilities.setCapability("waitForAppScript","$.delay(5000); true");
 		capabilities.setCapability("clearSystemFiles", true);
+	//	capabilities.setCapability("xcodeOrgId", "54VVTD24DT");
+	//	capabilities.setCapability("xcodeSigningId", "iPhone Developer");
+	//	capabilities.setCapability("locale", "en_US");
+	//	capabilities.setCapability("language", "en");
 		System.out.println("Reading capabilities done");
 		// Wait time for Execution of node.js
 		// TestBase.waitForMilliSeconds(10000);
@@ -5559,7 +5564,7 @@ public class Functions extends Driver {
 				} else {
 					if (startY - offsetY > 625) {
 						System.out.println("Since Card position  >625, reducing startY valueto 625 to avoid press on sticky ad ");
-						//logStep("Since Card position >625, reducing startY valueto 625 to avoid press on sticky ad ");
+						logStep("Since Card position >625, reducing startY valueto 625 to avoid press on sticky ad ");
 						startY = 625;
 						performScrollTouchAction(1, startY, 0, moveY);
 					} else {

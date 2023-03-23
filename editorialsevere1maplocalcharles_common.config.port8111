@@ -348,7 +348,7 @@
                 <path>/cms/v4/list/en_US/mobile/video/app</path>
                 <query>*</query>
               </sourceLocation>
-              <dest>/Users/narasimhanukala/Work/TWC/MobileAutomation/Branch/Narasimha/adsqaios-automation/src/test/resources/Editorial.json</dest>
+              <dest>/Users/narasimhanukala/Work/TWC/android/MobileAutomation/adsqaandroid-automation/src/test/resources/Editorial.json</dest>
               <enabled>true</enabled>
               <caseSensitive>false</caseSensitive>
             </mapLocalMapping>

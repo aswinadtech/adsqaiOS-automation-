@@ -16,6 +16,7 @@ import com.twc.ios.app.pages.HourlyNavTab;
 import com.twc.ios.app.pages.PlanningCardScreen;
 import com.twc.ios.app.pages.RadarNavTab;
 import com.twc.ios.app.pages.SeasonalHubCardScreen;
+import com.twc.ios.app.pages.SettingsScreen;
 import com.twc.ios.app.pages.VideoNavTab;
 
 import org.testng.annotations.BeforeClass;
@@ -46,6 +47,7 @@ public class LATAMPEPrivacyTest extends TwcIosBaseTest {
 	AddressScreen addrScreen;
 	PlanningCardScreen pScreen;
 	SeasonalHubCardScreen sScreen;
+	SettingsScreen stScreen;
 
 	@BeforeClass(alwaysRun = true)
 	@Description("BeforeClass")
@@ -163,8 +165,6 @@ public class LATAMPEPrivacyTest extends TwcIosBaseTest {
 		Functions.checkForAppState();
 		Functions.put_Background_launch(15);
 		Functions.checkForAppState();
-		proxy.getXml();
-		Utils.createXMLFileForCharlesSessionFile();
 		hrTab = new HourlyNavTab(Ad);
 		dTab = new DailyNavTab(Ad);
 		hmTab = new HomeNavTab(Ad);
@@ -173,6 +173,13 @@ public class LATAMPEPrivacyTest extends TwcIosBaseTest {
 		addrScreen = new AddressScreen(Ad);
 		pScreen = new PlanningCardScreen(Ad);
 		sScreen = new SeasonalHubCardScreen(Ad);
+		stScreen = new SettingsScreen(Ad);
+		addrScreen.clearAddedAddresses();
+		TestBase.waitForMilliSeconds(5000);
+		addrScreen.enternewAddress(false, "07095", "Woodbridge, New Jersey");
+		TestBase.waitForMilliSeconds(20000);
+		proxy.getXml();
+		Utils.createXMLFileForCharlesSessionFile();
 
 	}
 
@@ -209,8 +216,8 @@ public class LATAMPEPrivacyTest extends TwcIosBaseTest {
 	@Description("WFXTrigger Call verification")
 	public void Verify_WFXTriggers_Callfor_LATAMPE() throws Exception {
 		System.out.println("==============================================");
-		System.out.println("****** triggers.wfxtriggers.com Call test case Started");
-		logStep("****** triggers.wfxtriggers.com Call test case Started");
+		System.out.println("****** prod.weatherfx.com Call test case Started");
+		logStep("****** prod.weatherfx.com Call test case Started");
 		Utils.verifyAPICal("Smoke", "WFXTrigger", true);
 
 	}
