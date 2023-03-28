@@ -1467,16 +1467,11 @@ public class Utils extends Functions {
 		String cust_params = "";
 		String[] key = null;
 		// if (qryValue != null && qryValue.contains("cust_params")) {
-		if (qryValue != null && qryValue.contains(cust_param)) {
-			cust_params = qryValue.substring(qryValue.indexOf(cust_param));
-			cust_params = cust_params.replace("%26", "&");
-			cust_params = cust_params.replace("%2C", ",");
-			cust_params = cust_params.replace("%3D", "=");
-			cust_params = cust_params.replace("%2F", "/");
-			cust_params = cust_params.replace("%3A", ":");
-			cust_params = cust_params.replace("%3F", "?");
+		if (qryValue != null && qryValue.contains(cust_param + "=")) {
+			cust_params = qryValue.substring(qryValue.indexOf(cust_param + "="));
+			
 		}
-		if (cust_params.indexOf(cust_param) >= 0) {
+		if (cust_params.indexOf(cust_param + "=") >= 0) {
 			try {
 				cust_params = cust_params.substring(cust_params.indexOf(cust_param + "="));
 				cust_params = cust_params.substring(cust_params.indexOf(cust_param));
@@ -1485,6 +1480,12 @@ public class Utils extends Functions {
 				cust_params = cust_params.substring(cust_params.indexOf(cust_param));
 			}
 			// cust_params = cust_params.substring(cust_params.indexOf(cust_param));
+			cust_params = cust_params.replace("%26", "&");
+			cust_params = cust_params.replace("%2C", ",");
+			cust_params = cust_params.replace("%3D", "=");
+			cust_params = cust_params.replace("%2F", "/");
+			cust_params = cust_params.replace("%3A", ":");
+			cust_params = cust_params.replace("%3F", "?");
 			String b[] = cust_params.split("&");
 			cust_params = b[0];
 			key = cust_params.split("=");
@@ -9507,6 +9508,9 @@ public class Utils extends Functions {
 							if (cust_param.equalsIgnoreCase("wfxtg") || cust_param.equalsIgnoreCase("cxtg")
 									|| cust_param.equalsIgnoreCase("nzcs") || cust_param.equalsIgnoreCase("zcs")
 									|| cust_param.equalsIgnoreCase("hzcs")) {
+								if (zipCode.length()==6) {
+									countryCode = "IN";
+								}
 								mainTag = (JSONObject) mainTag.get(JsonValues[1].trim()+":"+zipCode+":"+constant+":"+countryCode);
 							} else {
 								mainTag = (JSONObject) mainTag.get(JsonValues[1].trim());
@@ -10528,65 +10532,74 @@ public class Utils extends Functions {
 			}
 
 		}
+		
+		if (nextGenIMadDisplayed && sheetName.equalsIgnoreCase("Pulltorefresh")) {
+			System.out.println("Since IM Ad displayed on App Launch, Homescreen call validation is skipped");
+			logStep("Since IM Ad displayed on App Launch, Homescreen call validation is skipped");
+		} else {
 
-		if (!adCallFound) {
-			System.out.println("Ad Call :" + iuId + " not found in charles session, hence Custom Parameter: "
-					+ cust_param + " validation skipped");
-			logStep("Ad Call :" + iuId + " not found in charles session, hence Custom Parameter: " + cust_param
-					+ " validation skipped");
-			System.out.println("Custom Parameter :" + cust_param + " validation is failed");
-			logStep("Custom Parameter :" + cust_param + " validation is failed");
-			Assert.fail("Ad Call :" + iuId + " not found in charles session, hence Custom Parameter: " + cust_param
-					+ " validation skipped");
-		} else if (adCallFound && !tempCustmParam.isEmpty()) {
-			System.out.println(cust_param + " value of from gampad call  of : " + iuId + " is " + tempCustmParam);
-			if (expected.equalsIgnoreCase("NotNull")) {
-				if (!tempCustmParam.equalsIgnoreCase("nl")) {
-					System.out.println("Custom Parameter :" + cust_param + " value: " + tempCustmParam
-							+ " is matched with the expected value " + expected);
-					logStep("Custom Parameter :" + cust_param + " value: " + tempCustmParam
-							+ " is matched with the expected value " + expected);
-					System.out.println("Custom Parameter :" + cust_param + " validation is successful");
-					logStep("Custom Parameter :" + cust_param + " validation is successful");
+			if (!adCallFound) {
+				System.out.println("Ad Call :" + iuId + " not found in charles session, hence Custom Parameter: "
+						+ cust_param + " validation skipped");
+				logStep("Ad Call :" + iuId + " not found in charles session, hence Custom Parameter: " + cust_param
+						+ " validation skipped");
+				System.out.println("Custom Parameter :" + cust_param + " validation is failed");
+				logStep("Custom Parameter :" + cust_param + " validation is failed");
+				Assert.fail("Ad Call :" + iuId + " not found in charles session, hence Custom Parameter: " + cust_param
+						+ " validation skipped");
+			} else if (adCallFound && !tempCustmParam.isEmpty()) {
+				System.out.println(cust_param + " value of from gampad call  of : " + iuId + " is " + tempCustmParam);
+				if (expected.equalsIgnoreCase("NotNull")) {
+					if (!tempCustmParam.equalsIgnoreCase("nl")) {
+						System.out.println("Custom Parameter :" + cust_param + " value: " + tempCustmParam
+								+ " is matched with the expected value " + expected);
+						logStep("Custom Parameter :" + cust_param + " value: " + tempCustmParam
+								+ " is matched with the expected value " + expected);
+						System.out.println("Custom Parameter :" + cust_param + " validation is successful");
+						logStep("Custom Parameter :" + cust_param + " validation is successful");
+					} else {
+						System.out.println("Custom Parameter :" + cust_param + " value: " + tempCustmParam
+								+ " is not matched with the expected value " + expected);
+						logStep("Custom Parameter :" + cust_param + " value: " + tempCustmParam
+								+ " is not matched with the expected value " + expected);
+						System.out.println("Custom Parameter :" + cust_param + " validation is failed");
+						logStep("Custom Parameter :" + cust_param + " validation is failed");
+						Assert.fail("Custom Parameter :" + cust_param + " value: " + tempCustmParam
+								+ " is not matched with the expected value " + expected);
+					}
 				} else {
-					System.out.println("Custom Parameter :" + cust_param + " value: " + tempCustmParam
-							+ " is not matched with the expected value " + expected);
-					logStep("Custom Parameter :" + cust_param + " value: " + tempCustmParam
-							+ " is not matched with the expected value " + expected);
-					System.out.println("Custom Parameter :" + cust_param + " validation is failed");
-					logStep("Custom Parameter :" + cust_param + " validation is failed");
-					Assert.fail("Custom Parameter :" + cust_param + " value: " + tempCustmParam
-							+ " is not matched with the expected value " + expected);
+					if (tempCustmParam.equalsIgnoreCase(expected)) {
+						System.out.println("Custom Parameter :" + cust_param + " value: " + tempCustmParam
+								+ " is matched with the expected value " + expected);
+						logStep("Custom Parameter :" + cust_param + " value: " + tempCustmParam
+								+ " is matched with the expected value " + expected);
+						System.out.println("Custom Parameter :" + cust_param + " validation is successful");
+						logStep("Custom Parameter :" + cust_param + " validation is successful");
+					} else {
+						System.out.println("Custom Parameter :" + cust_param + " value: " + tempCustmParam
+								+ " is not matched with the expected value " + expected);
+						logStep("Custom Parameter :" + cust_param + " value: " + tempCustmParam
+								+ " is not matched with the expected value " + expected);
+						System.out.println("Custom Parameter :" + cust_param + " validation is failed");
+						logStep("Custom Parameter :" + cust_param + " validation is failed");
+						Assert.fail("Custom Parameter :" + cust_param + " value: " + tempCustmParam
+								+ " is not matched with the expected value " + expected);
+					}
 				}
-			} else {
-				if (tempCustmParam.equalsIgnoreCase(expected)) {
-					System.out.println("Custom Parameter :" + cust_param + " value: " + tempCustmParam
-							+ " is matched with the expected value " + expected);
-					logStep("Custom Parameter :" + cust_param + " value: " + tempCustmParam
-							+ " is matched with the expected value " + expected);
-					System.out.println("Custom Parameter :" + cust_param + " validation is successful");
-					logStep("Custom Parameter :" + cust_param + " validation is successful");
-				} else {
-					System.out.println("Custom Parameter :" + cust_param + " value: " + tempCustmParam
-							+ " is not matched with the expected value " + expected);
-					logStep("Custom Parameter :" + cust_param + " value: " + tempCustmParam
-							+ " is not matched with the expected value " + expected);
-					System.out.println("Custom Parameter :" + cust_param + " validation is failed");
-					logStep("Custom Parameter :" + cust_param + " validation is failed");
-					Assert.fail("Custom Parameter :" + cust_param + " value: " + tempCustmParam
-							+ " is not matched with the expected value " + expected);
-				}
+
+			} else if (tempCustmParam == null || tempCustmParam.isEmpty()) {
+				System.out.println(
+						"Custom parameter :" + cust_param + " not found/no value in ad call, hence Custom Parameter: "
+								+ cust_param + " validation skipped");
+				logStep("Custom parameter :" + cust_param + " not found/no value in ad call, hence Custom Parameter: "
+						+ cust_param + " validation skipped");
+				System.out.println("Custom Parameter :" + cust_param + " validation is failed");
+				logStep("Custom Parameter :" + cust_param + " validation is failed");
+				Assert.fail(
+						"Custom parameter :" + cust_param + " not found/no value in ad call, hence Custom Parameter: "
+								+ cust_param + " validation skipped");
 			}
-
-		} else if (tempCustmParam == null || tempCustmParam.isEmpty()) {
-			System.out.println("Custom parameter :" + cust_param
-					+ " not found/no value in ad call, hence Custom Parameter: " + cust_param + " validation skipped");
-			logStep("Custom parameter :" + cust_param + " not found/no value in ad call, hence Custom Parameter: "
-					+ cust_param + " validation skipped");
-			System.out.println("Custom Parameter :" + cust_param + " validation is failed");
-			logStep("Custom Parameter :" + cust_param + " validation is failed");
-			Assert.fail("Custom parameter :" + cust_param + " not found/no value in ad call, hence Custom Parameter: "
-					+ cust_param + " validation skipped");
+		
 		}
 
 	}

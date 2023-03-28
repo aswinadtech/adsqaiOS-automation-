@@ -201,22 +201,22 @@ public class USAPrivacyTest extends TwcIosBaseTest {
 		}catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			//proxy.getXml();
-			  Functions.archive_folder("Charles"); 
-			  proxy.clearCharlesSession(); 
-			  System.out.println("Kill and Launching the app after privacy optin is selected");
-			  logStep("Kill and Launching the app after privacy optin is selected");
-			  Functions.close_launchApp();
-			  //Functions.checkForAppState();
-			  proxy.clearCharlesSession();
-			  Functions.close_launchApp();
-			  Functions.checkForAppState();
-		   	  Functions.put_Background_launch(15);
-			  Functions.checkForAppState();
-			  addrScreen.clearAddedAddresses();
-				TestBase.waitForMilliSeconds(5000);
-				addrScreen.enternewAddress(false, "07095", "Woodbridge, New Jersey");
-				TestBase.waitForMilliSeconds(20000);
+			// proxy.getXml();
+			Functions.archive_folder("Charles");
+			proxy.clearCharlesSession();
+			System.out.println("Kill and Launching the app after privacy optin is selected");
+			logStep("Kill and Launching the app after privacy optin is selected");
+			Functions.close_launchApp();
+			// Functions.checkForAppState();
+			proxy.clearCharlesSession();
+			Functions.close_launchApp();
+			Functions.checkForAppState();
+			Functions.put_Background_launch(15);
+			Functions.checkForAppState();
+			addrScreen.clearAddedAddresses();
+			TestBase.waitForMilliSeconds(5000);
+			addrScreen.enternewAddress(false, "07095", "Woodbridge, New Jersey");
+			TestBase.waitForMilliSeconds(20000);
 		}
 	  
 	}
@@ -595,7 +595,7 @@ public class USAPrivacyTest extends TwcIosBaseTest {
 		System.out.println("==============================================");
 		System.out.println("****** prod.weatherfx.com Call test case Started when privacy optout");
 		logStep("****** prod.weatherfx.com Call test case Started when privacy optout");
-		Utils.verifyAPICal("Smoke", "WFXTrigger", true);
+		Utils.verifyAPICal("Smoke", "WFXTrigger", false);
 
 	}
 

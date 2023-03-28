@@ -124,9 +124,9 @@
     <fullscreen>false</fullscreen>
     <mainWindow>
       <x>20</x>
-      <y>76</y>
+      <y>53</y>
       <width>900</width>
-      <height>688</height>
+      <height>694</height>
     </mainWindow>
     <lastCheckUpdates>2017-06-30 06:35:41.478 UTC</lastCheckUpdates>
   </startupConfiguration>
@@ -249,7 +249,7 @@
                     <location>
                       <protocol>https</protocol>
                       <host>dsx.weather.com</host>
-                      <path>/cms/*/privacy/en_US/*/*</path>
+                      <path>/cms/v5/privacy/en_US/twc-ios-flagship/*</path>
                     </location>
                     <enabled>true</enabled>
                   </locationMatch>

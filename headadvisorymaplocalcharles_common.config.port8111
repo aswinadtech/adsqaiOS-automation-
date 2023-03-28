@@ -173,6 +173,14 @@
         <columnStates/>
       </entry>
       <entry>
+        <string>SessionFrame.splitPlane.dividerLocation.vertical</string>
+        <int>200</int>
+      </entry>
+      <entry>
+        <string>SessionFrame.navTabs.mode</string>
+        <string>Sequence</string>
+      </entry>
+      <entry>
         <string>NavigatorJTable.TABLE_COLUMN_STATES</string>
         <columnStates/>
       </entry>
@@ -237,7 +245,7 @@
       <entry>
         <string>Rewrite</string>
         <rewrite>
-          <toolEnabled>true</toolEnabled>
+          <toolEnabled>false</toolEnabled>
           <debugging>false</debugging>
           <sets>
             <rewriteSet>
@@ -249,7 +257,7 @@
                     <location>
                       <protocol>https</protocol>
                       <host>dsx.weather.com</host>
-                      <path>/cms/v5/privacy/en_US/*/*</path>
+                      <path>/cms/*/privacy/en_US/twc-ios-flagship/*</path>
                     </location>
                     <enabled>true</enabled>
                   </locationMatch>
@@ -324,7 +332,7 @@
                 <path>/v3/aggcommon/*</path>
                 <query>*</query>
               </sourceLocation>
-              <dest>/Users/narasimhanukala/Work/TWC/android/MobileAutomation/adsqaandroid-automation/src/test/resources/HeatAdvisoryYakimaWashingtonAndroid.json</dest>
+              <dest>/Users/narasimhanukala/Work/TWC/MobileAutomation/Branch/Narasimha/adsqaios-automation/src/test/resources/HeatAdvisoryYakimaWashington.json</dest>
               <enabled>true</enabled>
               <caseSensitive>false</caseSensitive>
             </mapLocalMapping>

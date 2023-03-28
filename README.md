@@ -1,1 +1,1 @@
-# adsqaandroid-automation
+# adsqaios-automation

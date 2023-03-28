@@ -221,9 +221,17 @@ public class SettingsScreen extends Utils {
 					privacy_Optout_label = TestBase.getElementAttribute(privacy_Optout, "name");
 				}
 			}
-			privacy_Optin_default = Ad.findElementByXPath(ReadExcelValues.data[25][Cap]);
-			//privacy_Optin_default_label = privacy_Optin_default.getAttribute("value");
-			privacy_Optin_default_label = TestBase.getElementAttribute(privacy_Optin_default, "value");
+			try {
+				privacy_Optin_default = Ad.findElementByXPath(ReadExcelValues.data[25][Cap]);
+				//privacy_Optin_default_label = privacy_Optin_default.getAttribute("value");
+				//privacy_Optin_default_label = TestBase.getElementAttribute(privacy_Optin_default, "value");
+				privacy_Optin_default_label = "1";
+			} catch (Exception e) {
+				System.out.println("Privacy Option is not set to optin");
+				logStep("Privacy Option is not set to optin");
+				privacy_Optin_default_label = "0";
+			}
+			
 			if (privacy_Optin_default_label.equalsIgnoreCase("1")) {
 				System.out.println("Privacy Option is already set to optin");
 				logStep("Privacy Option is already set to optin");
@@ -317,10 +325,18 @@ public class SettingsScreen extends Utils {
 			} catch (Exception e) {
 				
 				e.printStackTrace();
+			}			
+			try {
+				privacy_Optin_default = Ad.findElementByXPath(ReadExcelValues.data[33][Cap]);
+				//privacy_Optin_default_label = privacy_Optin_default.getAttribute("value");
+				//privacy_Optin_default_label = TestBase.getElementAttribute(privacy_Optin_default, "value");
+				privacy_Optin_default_label = "1";
+			} catch (Exception e) {
+				System.out.println("Privacy Option is not set to optin");
+				logStep("Privacy Option is not set to optin");
+				privacy_Optin_default_label = "0";
 			}
-			privacy_Optin_default = Ad.findElementByXPath(ReadExcelValues.data[33][Cap]);
-			//privacy_Optin_default_label = privacy_Optin_default.getAttribute("value");
-			privacy_Optin_default_label = TestBase.getElementAttribute(privacy_Optin_default, "value");
+			
 			if (privacy_Optin_default_label.equalsIgnoreCase("1")) {
 				System.out.println("Privacy Option is already set to optin");
 				logStep("Privacy Option is already set to optin");
@@ -422,9 +438,16 @@ public class SettingsScreen extends Utils {
 					privacy_Optout_label = TestBase.getElementAttribute(privacy_Optout, "name");
 				}
 			}
-			privacy_Optin_default = Ad.findElementByXPath(ReadExcelValues.data[25][Cap]);
-			//privacy_Optin_default_label = privacy_Optin_default.getAttribute("value");
-			privacy_Optin_default_label = TestBase.getElementAttribute(privacy_Optin_default, "value");
+			try {
+				privacy_Optin_default = Ad.findElementByXPath(ReadExcelValues.data[25][Cap]);
+				//privacy_Optin_default_label = privacy_Optin_default.getAttribute("value");
+				//privacy_Optin_default_label = TestBase.getElementAttribute(privacy_Optin_default, "value");
+				privacy_Optin_default_label = "1";
+			} catch (Exception e) {
+				System.out.println("Privacy Option is not set to optin");
+				logStep("Privacy Option is not set to optin");
+				privacy_Optin_default_label = "0";
+			}
 
 			if (!privacy_Optin_default_label.equalsIgnoreCase("1")) {
 				System.out.println("Already Privacy Optout is selected");
@@ -519,9 +542,16 @@ public class SettingsScreen extends Utils {
 				e.printStackTrace();
 				
 			}
-			privacy_Optin_default = Ad.findElementByXPath(ReadExcelValues.data[33][Cap]);
-			//privacy_Optin_default_label = privacy_Optin_default.getAttribute("value");
-			privacy_Optin_default_label = TestBase.getElementAttribute(privacy_Optin_default, "value");
+			try {
+				privacy_Optin_default = Ad.findElementByXPath(ReadExcelValues.data[33][Cap]);
+				//privacy_Optin_default_label = privacy_Optin_default.getAttribute("value");
+				//privacy_Optin_default_label = TestBase.getElementAttribute(privacy_Optin_default, "value");
+				privacy_Optin_default_label = "1";
+			} catch (Exception e) {
+				System.out.println("Privacy Option is not set to optin");
+				logStep("Privacy Option is not set to optin");
+				privacy_Optin_default_label = "0";
+			}
 
 			if (!privacy_Optin_default_label.equalsIgnoreCase("1")) {
 				System.out.println("Already Privacy Optout is selected");
@@ -630,13 +660,29 @@ public class SettingsScreen extends Utils {
 					//privacy_Optout_label = privacy_Optout.getAttribute("name");
 					privacy_Optout_label = TestBase.getElementAttribute(privacy_Optout, "name");
 				} catch (Exception e) {
-					privacy_Optout = Ad.findElementByXPath(ReadExcelValues.data[27][Cap]);
-					//privacy_Optout_label = privacy_Optout.getAttribute("name");
-					privacy_Optout_label = TestBase.getElementAttribute(privacy_Optout, "name");
+					
+					try {
+						privacy_Optout = Ad.findElementByXPath(ReadExcelValues.data[27][Cap]);
+						//privacy_Optout_label = privacy_Optout.getAttribute("name");
+						privacy_Optout_label = TestBase.getElementAttribute(privacy_Optout, "name");
+					} catch (Exception e1) {
+						privacy_Optout = Ad.findElementByXPath(ReadExcelValues.data[28][Cap]);
+						//privacy_Optout_label = privacy_Optout.getAttribute("name");
+						privacy_Optout_label = TestBase.getElementAttribute(privacy_Optout, "name");
+					}
 				}
-				privacy_Optin_default = Ad.findElementByXPath(ReadExcelValues.data[25][Cap]);
-				//privacy_Optin_default_label = privacy_Optin_default.getAttribute("value");
-				privacy_Optin_default_label = TestBase.getElementAttribute(privacy_Optin_default, "value");
+				
+				try {
+					privacy_Optin_default = Ad.findElementByXPath(ReadExcelValues.data[25][Cap]);
+					//privacy_Optin_default_label = privacy_Optin_default.getAttribute("value");
+					//privacy_Optin_default_label = TestBase.getElementAttribute(privacy_Optin_default, "value");
+					privacy_Optin_default_label = "1";
+				} catch (Exception e) {
+					System.out.println("Privacy Option is not set to optin");
+					logStep("Privacy Option is not set to optin");
+					privacy_Optin_default_label = "0";
+				}
+				
 				if (!privacy_Optin_default_label.equalsIgnoreCase("1")) {
 					System.out.println("By default Privacy Option is set to false");
 					logStep("By default Privacy Option is set to false");

@@ -249,7 +249,7 @@
                     <location>
                       <protocol>https</protocol>
                       <host>dsx.weather.com</host>
-                      <path>/cms/*/privacy/en_US/*/*</path>
+                      <path>/cms/*/privacy/en_US/twc-ios-flagship/*</path>
                     </location>
                     <enabled>true</enabled>
                   </locationMatch>

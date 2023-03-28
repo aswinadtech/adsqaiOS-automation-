@@ -125,8 +125,8 @@
     <mainWindow>
       <x>20</x>
       <y>48</y>
-      <width>900</width>
-      <height>694</height>
+      <width>1484</width>
+      <height>859</height>
     </mainWindow>
     <lastCheckUpdates>2017-06-30 06:35:41.478 UTC</lastCheckUpdates>
   </startupConfiguration>
@@ -171,6 +171,14 @@
       <entry>
         <string>ChartPanel.DURATION_TABLE_COLUMN_STATES</string>
         <columnStates/>
+      </entry>
+      <entry>
+        <string>SessionFrame.splitPlane.dividerLocation.vertical</string>
+        <int>255</int>
+      </entry>
+      <entry>
+        <string>SessionFrame.navTabs.mode</string>
+        <string>Sequence</string>
       </entry>
       <entry>
         <string>NavigatorJTable.TABLE_COLUMN_STATES</string>
@@ -249,7 +257,7 @@
                     <location>
                       <protocol>https</protocol>
                       <host>dsx.weather.com</host>
-                      <path>/cms/v5/privacy/en_US/twc-ios-flagship/*</path>
+                      <path>/cms/v5/privacy/en_US/*/*</path>
                     </location>
                     <enabled>true</enabled>
                   </locationMatch>
@@ -315,7 +323,7 @@
       <entry>
         <string>Map Local</string>
         <mapLocal>
-          <toolEnabled>false</toolEnabled>
+          <toolEnabled>true</toolEnabled>
           <mappings>
             <mapLocalMapping>
               <sourceLocation>
@@ -324,7 +332,7 @@
                 <path>/v3/aggcommon/*</path>
                 <query>*</query>
               </sourceLocation>
-              <dest>/Users/narasimhanukala/Work/TWC/MobileAutomation/Branch/Narasimha/adsqaios-automation/src/test/resources/SevereInsightAtlanta.json</dest>
+              <dest>/Users/narasimhanukala/Work/TWC/MobileAutomation/Branch/Narasimha/adsqaios-automation/src/test/resources/SevereInsightAtlantaAndroid.json</dest>
               <enabled>true</enabled>
               <caseSensitive>false</caseSensitive>
             </mapLocalMapping>

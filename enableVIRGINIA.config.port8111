@@ -157,6 +157,10 @@
     </warningsSeen>
     <properties>
       <entry>
+        <string>SessionFrame.splitPlane.dividerLocation.horizontal</string>
+        <int>300</int>
+      </entry>
+      <entry>
         <string>SummaryPanel.TABLE_COLUMN_STATES</string>
         <columnStates/>
       </entry>
@@ -174,7 +178,7 @@
       </entry>
       <entry>
         <string>SessionFrame.splitPlane.dividerLocation.vertical</string>
-        <int>200</int>
+        <int>338</int>
       </entry>
       <entry>
         <string>SessionFrame.navTabs.mode</string>
@@ -249,7 +253,7 @@
       <entry>
         <string>Rewrite</string>
         <rewrite>
-          <toolEnabled>true</toolEnabled>
+          <toolEnabled>false</toolEnabled>
           <debugging>false</debugging>
           <sets>
             <rewriteSet>

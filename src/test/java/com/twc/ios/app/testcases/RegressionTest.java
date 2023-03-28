@@ -3341,7 +3341,7 @@ public class RegressionTest extends TwcIosBaseTest {
 		hmTab.clickonHomeTab();
 		hmTab.clickonHomeTab();
 		//loginScreen.navigatetoLogInPage();
-		loginScreen.logInToApp("jmktwc4@gmail.com", "300Inter$tate");
+		loginScreen.logInToApp("jmktwc4@weather.com", "300Inter$tate");
 		proxy.clearCharlesSession();
 		Functions.close_launchApp();
 		Functions.put_Background_launch(10);

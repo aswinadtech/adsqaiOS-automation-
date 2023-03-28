@@ -30,10 +30,10 @@ public class LogInScreen extends Utils {
 	String manageSubscription_Xpath = "//XCUIElementTypeCell[@name=\"manage_subscriptions_cell\"]";
 	String signOut_Xpath = "//XCUIElementTypeCell[@name=\"signout_cell\"]";
 	String signOutSuccessOkayButton_Xpath = "//XCUIElementTypeButton[@name=\"Okay\"]";
-	String premiumProMonthlyButton_Xpath = "(//XCUIElementTypeButton[@name=\"purchase_purchase_button_monthly\"])[2]";
-	String adFreeMonthlyButton_Xpath = "(//XCUIElementTypeButton[@name=\"purchase_purchase_button_monthly\"])[1]";
-	String premiumProAnnualButton_Xpath = "(//XCUIElementTypeButton[@name=\"purchase_purchase_button_yearly\"])[2]";
-	String adFreeAnnualButton_Xpath = "(//XCUIElementTypeButton[@name=\"purchase_purchase_button_yearly\"])[1]";
+	String premiumProMonthlyButton_Xpath = "//XCUIElementTypeStaticText[@label='PREMIUM PRO']/following-sibling::XCUIElementTypeButton[@name='purchase_purchase_button_monthly']";
+	String adFreeMonthlyButton_Xpath = "//XCUIElementTypeStaticText[@label='AD FREE']/following-sibling::XCUIElementTypeButton[@name='purchase_purchase_button_monthly']";
+	String premiumProAnnualButton_Xpath = "//XCUIElementTypeStaticText[@label='PREMIUM PRO']/following-sibling::XCUIElementTypeButton[@name='purchase_purchase_button_yearly']";
+	String adFreeAnnualButton_Xpath = "//XCUIElementTypeStaticText[@label='AD FREE']/following-sibling::XCUIElementTypeButton[@name='purchase_purchase_button_yearly']";
 	String appleIdInput_Xpath = "//XCUIElementTypeTextField";
 	String applePasswordInput_Xpath = "//XCUIElementTypeSecureTextField";
 	String appleLogInOK_Xpath = "//XCUIElementTypeButton[@name=\"OK\"]";
@@ -215,9 +215,9 @@ public class LogInScreen extends Utils {
 				TestBase.clickOnElement(bySandboxSignInButton, sandboxSignInButton, "Sandbox Sign In Button");
 				attachScreen();	
 			}catch (Exception e) {
-				attachScreen();
 				System.out.println("Sandbox password input not displayed");
 				logStep("Sandbox password input not displayed");
+				attachScreen();
 			}
 			try {
 				TestBase.waitForVisibilityOfElementLocated(Ad, 120, byYouAreAllSetText);
@@ -233,9 +233,9 @@ public class LogInScreen extends Utils {
 				TestBase.clickOnElement(byCloseMenuButton, closeMenuButton, "Done Button");
 				attachScreen();
 			} catch  (Exception e) {
-				attachScreen();
 				System.out.println("Looks Adfree not enabled, look at screenshot");
 				logStep("Looks Adfree not enabled, look at screenshot");
+				attachScreen();
 			}
 						
 			
@@ -297,9 +297,9 @@ public class LogInScreen extends Utils {
 				TestBase.clickOnElement(bySandboxSignInButton, sandboxSignInButton, "Sandbox Sign In Button");
 				attachScreen();	
 			}catch (Exception e) {
-				attachScreen();
 				System.out.println("Sandbox password input not displayed");
 				logStep("Sandbox password input not displayed");
+				attachScreen();
 			}
 						
 			try {
@@ -316,9 +316,9 @@ public class LogInScreen extends Utils {
 				TestBase.clickOnElement(byCloseMenuButton, closeMenuButton, "Done Button");
 				attachScreen();
 			} catch (Exception e) {
-				attachScreen();
 				System.out.println("Looks Adfree not enabled, look at screenshot");
 				logStep("Looks Adfree not enabled, look at screenshot");
+				attachScreen();
 			}
 			
 		}
@@ -379,9 +379,9 @@ public class LogInScreen extends Utils {
 				TestBase.clickOnElement(bySandboxSignInButton, sandboxSignInButton, "Sandbox Sign In Button");
 				attachScreen();	
 			}catch (Exception e) {
-				attachScreen();
 				System.out.println("Sandbox password input not displayed");
 				logStep("Sandbox password input not displayed");
+				attachScreen();
 			}
 			
 			try {
@@ -398,9 +398,9 @@ public class LogInScreen extends Utils {
 				TestBase.clickOnElement(byCloseMenuButton, closeMenuButton, "Done Button");
 				attachScreen();
 			} catch (Exception e) {
-				attachScreen();
 				System.out.println("Looks Premium not enabled, look at screenshot");
 				logStep("Looks Premium not enabled, look at screenshot");
+				attachScreen();
 			}
 		}
 			
@@ -460,9 +460,9 @@ public class LogInScreen extends Utils {
 				TestBase.clickOnElement(bySandboxSignInButton, sandboxSignInButton, "Sandbox Sign In Button");
 				attachScreen();	
 			}catch (Exception e) {
-				attachScreen();
 				System.out.println("Sandbox password input not displayed");
 				logStep("Sandbox password input not displayed");
+				attachScreen();
 			}
 			
 			try {
@@ -479,9 +479,9 @@ public class LogInScreen extends Utils {
 				TestBase.clickOnElement(byCloseMenuButton, closeMenuButton, "Done Button");
 				attachScreen();
 			} catch (Exception e) {
-				attachScreen();
 				System.out.println("Looks Adfree not enabled, look at screenshot");
 				logStep("Looks Adfree not enabled, look at screenshot");
+				attachScreen();
 			}
 		}
 			

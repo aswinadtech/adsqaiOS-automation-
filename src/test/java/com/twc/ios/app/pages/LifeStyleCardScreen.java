@@ -30,7 +30,8 @@ public class LifeStyleCardScreen extends Utils {
 	String cancelButton_AccessibilityId = "Cancel";
 	String articlesLink_Xpath = "(//XCUIElementTypeStaticText[@label='Latest News']/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeButton)[2]";
 	String articlesHeader_AccessibilityId = "view_articleCategoryHeader";
-	String articlesHeaderFallBack_xpath = "//XCUIElementTypeCell[@name=\"view_articleDetailWXCHeroNodeCell\"]";
+	String articlesHeaderFallBack_Xpath = "//XCUIElementTypeCell[@name=\"view_articleDetailWXCHeroNodeCell\"]";
+	String videoArticlesheader_Xpath = "//XCUIElementTypeNavigationBar[@name='Video']";
 	String allergyContentNavigationBar_Xpath = "//XCUIElementTypeNavigationBar[@name='Allergy']";
 	String fluContentNavigationBar_Xpath = "//XCUIElementTypeNavigationBar[@name='Flu']";
 	String lifeStyleCardDynamicIndex_Xpath = "((//XCUIElementTypeTable[@name='lifestyle_combo_container'])[1]/XCUIElementTypeCell)[";
@@ -44,7 +45,8 @@ public class LifeStyleCardScreen extends Utils {
 	By byLifeStyleCardAllIndexes = MobileBy.xpath(lifeStyleCardAllIndexes_Xpath);
 	By byArticlesLink = MobileBy.xpath(articlesLink_Xpath);
 	By byArticlesHeader = MobileBy.AccessibilityId(articlesHeader_AccessibilityId);
-	By byArticlesHeaderFallBack = MobileBy.xpath(articlesHeaderFallBack_xpath);
+	By byArticlesHeaderFallBack = MobileBy.xpath(articlesHeaderFallBack_Xpath);
+	By byVideoArticlesHeader = MobileBy.xpath(videoArticlesheader_Xpath);
 	By byAllergyContentNavigationBar = MobileBy.xpath(allergyContentNavigationBar_Xpath);
 	By byFluContentNavigationBar = MobileBy.xpath(fluContentNavigationBar_Xpath);
 	By byAdvertisementOnFludetails = MobileBy.xpath(advertisementOnFludetails_Xpath);
@@ -378,6 +380,7 @@ public class LifeStyleCardScreen extends Utils {
 	public void navigateToArticlesPage() {
 		/*articlesLink = Ad.findElement(byArticlesLink);
 		TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");*/
+		boolean newsArticleFound = false;
 		for (int i = 1; i<=3; i++) {
 			System.out.println("Current iteration: "+i);
 			/**
@@ -387,12 +390,21 @@ public class LifeStyleCardScreen extends Utils {
 			List<MobileElement> currentItem = Ad.findElements(MobileBy.xpath("(//XCUIElementTypeStaticText[@label='Latest News']/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeButton)["+i+"]/parent::XCUIElementTypeOther/XCUIElementTypeImage"));
 			int imageCount = currentItem.size();
 			if (imageCount==1) {
+				newsArticleFound = true;
 				byArticlesLink = MobileBy.xpath("(//XCUIElementTypeStaticText[@label='Latest News']/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeButton)["+i+"]");
 				articlesLink = Ad.findElement(byArticlesLink);
 				TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");
 				break;
 			}
 			
+		}
+		/**
+		 * There may be cases when there are all three are video articles, hence if news article not found, going  through video article
+		 */
+		if (!newsArticleFound) {
+			byArticlesLink = MobileBy.xpath("(//XCUIElementTypeStaticText[@label='Latest News']/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeButton)[1]");
+			articlesLink = Ad.findElement(byArticlesLink);
+			TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");
 		}
 	}
 
@@ -402,7 +414,15 @@ public class LifeStyleCardScreen extends Utils {
 		try {
 			articlesHeader = Ad.findElement(byArticlesHeader);
 		} catch (Exception e) {
-			articlesHeader = Ad.findElement(byArticlesHeaderFallBack);
+			try {
+				articlesHeader = Ad.findElement(byArticlesHeaderFallBack);
+			} catch (Exception e1) {
+				/**
+				 * There are cases that, all three are video articles, checking for video bar on articles page
+				 */
+				//byArticlesHeader = MobileBy.xpath("//XCUIElementTypeNavigationBar[@name='Video']");
+				articlesHeader = Ad.findElement(byVideoArticlesHeader);
+			}
 		}
 		
 	}

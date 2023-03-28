@@ -603,7 +603,7 @@ public class VIRGINIAPrivacyTest extends TwcIosBaseTest {
 		System.out.println("==============================================");
 		System.out.println("****** prod.weatherfx.com Call test case Started when privacy optout");
 		logStep("****** prod.weatherfx.com Call test case Started when privacy optout");
-		Utils.verifyAPICal("Smoke", "WFXTrigger", true);
+		Utils.verifyAPICal("Smoke", "WFXTrigger", false);
 
 	}
 

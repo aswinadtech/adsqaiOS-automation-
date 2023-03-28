@@ -2135,6 +2135,134 @@ public class SmokeTest extends TwcIosBaseTest {
 	}*/
 	
 	/**
+	 * This method validates ppid parameter of Sticky ad Call
+	 */
+	@Test(priority = 350, enabled = true)
+	@Description("Validating 'ppid' parameter of Sticky ad Call")
+	public void validate_Sticky_Ad_Call_ppid_parameter() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating ppid parameter of Sticky ad call");
+		logStep("Validating ppid parameter of Sticky ad call");
+		Utils.validate_Noncustom_param_val_of_gampad("Smoke", "Pulltorefresh", "ppid", "NotNull");
+	}
+	
+	/**
+	 * This method validates ppid parameter of Hourly details call
+	 */
+	@Test(priority = 351, enabled = true)
+	@Description("Validating 'ppid' parameter of Hourly details call ")
+	public void Validate_HourlyDetails_ppid_parameter() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating ppid parameter of Hourly details call");
+		logStep("Validating ppid parameter of Hourly details call ");
+		Utils.validate_Noncustom_param_val_of_gampad("Smoke", "Hourly", "ppid", "NotNull");
+
+	}
+	
+	/**
+	 * This method validates ppid parameter of Daily Details ad Call
+	 */
+	@Test(priority = 352, enabled = true)
+	@Description("Validating 'ppid' parameter of Daily Details ad Call")
+	public void validate_Daily_Details_Ad_Call_ppid_parameter() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating ppid parameter of Daily Details ad call");
+		logStep("Validating ppid parameter of Daily Details ad call");
+		Utils.validate_Noncustom_param_val_of_gampad("Smoke", "Daily(10day)", "ppid", "NotNull");
+	}
+	
+	/**
+	 * This method validates ppid parameter of Map Details ad Call
+	 */
+	@Test(priority = 353, enabled = true)
+	@Description("Validating 'ppid' parameter of Map Details ad Call")
+	public void validate_Map_Details_Ad_Call_ppid_parameter() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating ppid parameter of Map Details ad call");
+		logStep("Validating ppid parameter of Map Details ad call");
+		Utils.validate_Noncustom_param_val_of_gampad("Smoke", "Map", "ppid", "NotNull");
+	}
+	
+	/**
+	 * This method validates fpd custom parameter of Marquee call
+	 */
+	@Test(priority = 360, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Marquee call ")
+	public void Validate_Marquee_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Marquee call");
+		logStep("Validating fpd custom parameter of Marquee call ");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Marquee", "fpd", "nl");
+
+	}
+	
+	/**
+	 * This method validates fpd custom parameter of Feed1 call
+	 */
+	@Test(priority = 361, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Feed1 call ")
+	public void Validate_Feed1_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Feed1 call");
+		logStep("Validating fpd custom parameter of Feed1 call ");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Feed1", "fpd", "nl");
+
+	}
+
+	/**
+	 * This method validates fpd custom parameter of Hourly details call
+	 */
+	@Test(priority = 362, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Hourly details call ")
+	public void Validate_HourlyDetails_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Hourly details call");
+		logStep("Validating fpd custom parameter of Hourly details call ");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Hourly", "fpd", "nl");
+
+	}
+	
+	/**
+	 * This method validates fpd custom parameter of Homescreen adhesive call
+	 */
+	@Test(priority = 363, enabled = true)
+	@Description("Validating 'fpd' custom parameter of HomeScreen Adhesive call ")
+	public void Validate_HomeScreen_Call_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of HomeScreen adhesive call");
+		logStep("Validating fpd custom parameter of HomeScreen adhesive call");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Pulltorefresh", "fpd", "nl");
+
+	}
+	
+	/**
+	 * This method validates fpd custom parameter of Daily details call
+	 */
+	@Test(priority = 364, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Daily details call ")
+	public void Validate_DailyDetails_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Daily details call");
+		logStep("Validating fpd custom parameter of Daily details call");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Daily(10day)", "fpd", "nl");
+
+	}
+	
+	/**
+	 * This method validates fpd custom parameter of Map details call
+	 */
+	@Test(priority = 365, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Map details call ")
+	public void Validate_MapDetails_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Map details call");
+		logStep("Validating fpd custom parameter of Map details call");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Map", "fpd", "nl");
+
+	}
+	
+	
+	/**
 	 * This method validate the daily details ad units and its parameters To execute
 	 * below method alone, Utils.get_v3_wx_forecast_daily_15day_data() to be
 	 * executed as a prerequisite script
@@ -2374,7 +2502,8 @@ public class SmokeTest extends TwcIosBaseTest {
 		proxy.clearCharlesSession();
 		Functions.close_launchApp();
 		Functions.checkForAppState();
-		/*addrScreen.enternewAddress(false, "30124", "Cave Spring, Georgia");
+		
+		/*---addrScreen.enternewAddress(false, "30124", "Cave Spring, Georgia");
 		TestBase.waitForMilliSeconds(20000);
 		addrScreen.enternewAddress(false, "07095", "Woodbridge, New Jersey");
 		TestBase.waitForMilliSeconds(20000);
@@ -2383,7 +2512,7 @@ public class SmokeTest extends TwcIosBaseTest {
 		proxy.clearCharlesSession();
 		Functions.close_launchApp();
 		Functions.checkForAppState();
-		TestBase.waitForMilliSeconds(2000);*/
+		TestBase.waitForMilliSeconds(2000);---*/
 		
 		proxy.clearCharlesSession();
 		
@@ -3154,6 +3283,32 @@ public class SmokeTest extends TwcIosBaseTest {
 		System.out.println("****** Validating content_url parameter of PreRollVideo call");
 		logStep("Validating content_url parameter of PreRollVideo call");
 		Utils.validate_non_custom_param_val_in_gampad_url("Smoke", "PreRollVideo", "content_url", "https://www.weather.com");
+	}
+	
+	/**
+	 * This method validates ppid parameter of Video Call
+	 */
+	@Test(priority = 681, enabled = true)
+	@Description("Validating 'ppid' parameter of Video Call")
+	public void Validate_PreRollVideo_Call_ppid_parameter() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating ppid parameter of PreRollVideo call");
+		logStep("Validating ppid parameter of PreRollVideo call");
+		Utils.validate_Noncustom_param_val_of_gampad("Smoke", "PreRollVideo", "ppid", "NotNull");
+
+	}
+	
+	/**
+	 * This method validates fpd custom parameter of Video call
+	 */
+	@Test(priority = 682, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Video call ")
+	public void Validate_PreRollVideo_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Video call");
+		logStep("Validating fpd custom parameter of Video call");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "PreRollVideo", "fpd", "nl");
+
 	}
 
 	/**
