@@ -1912,14 +1912,14 @@ public class AndroidRegressionTest extends TwcIosBaseTest {
 	}
 
 	@Test(priority = 800, enabled = true)
-	@Description("Verify Entry Interstitial Ads of Hourly Tab")
+	@Description("Verify Exit Interstitial Ads of Hourly Tab")
 	public void Verify_interstitial_ads_hourlyTab() throws Exception {
 		System.out.println("==============================================");
 		System.out.println(
-				"=========================== Entry Interstitial Ad Verification of Hourly Tab====================");
+				"=========================== Exit Interstitial Ad Verification of Hourly Tab====================");
 
-		System.out.println("****** Entry Interstitial Ad validation of Hourly Tab Started");
-		logStep("Entry Interstitial Ad validation of Hourly Tab Started ");
+		System.out.println("****** Exit Interstitial Ad validation of Hourly Tab Started");
+		logStep("Exit Interstitial Ad validation of Hourly Tab Started ");
 		Ad.resetApp();
 		TestBase.waitForMilliSeconds(2000);
 		Functions.close_launchAppAndroid();

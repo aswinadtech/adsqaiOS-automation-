@@ -1018,6 +1018,7 @@ public class AddressScreen extends Utils {
 		System.out.println("Clicked on Present Address");
 		logStep("Clicked on Present Address");
 		TestBase.waitForMilliSeconds(5000);
+		genericScroll(byButtonLocationManagementClear, true, false, getOffsetYTop(), TOLERANCE_FROM_TOP);
 		if (TestBase.isElementExists(byButtonLocationManagementClear)) {
 			try {
 				//MobileElement el1 = (MobileElement) Ad.findElementByAccessibilityId("button_locationManagementClear");

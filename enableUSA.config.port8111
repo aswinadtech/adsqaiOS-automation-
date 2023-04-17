@@ -122,12 +122,6 @@
     <checkUpdates>false</checkUpdates>
     <maximised>false</maximised>
     <fullscreen>false</fullscreen>
-    <mainWindow>
-      <x>20</x>
-      <y>48</y>
-      <width>900</width>
-      <height>694</height>
-    </mainWindow>
     <lastCheckUpdates>2017-06-30 06:35:41.478 UTC</lastCheckUpdates>
   </startupConfiguration>
   <userInterfaceConfiguration>
@@ -300,7 +294,7 @@
                   <matchRequest>false</matchRequest>
                   <matchResponse>true</matchResponse>
                   <newHeader>twc-geoip-region</newHeader>
-                  <newValue>GA</newValue>
+                  <newValue>WA</newValue>
                   <newHeaderRegex>false</newHeaderRegex>
                   <newValueRegex>false</newValueRegex>
                   <matchWholeValue>false</matchWholeValue>
@@ -363,7 +357,7 @@
           <locations>
             <locationPatterns/>
           </locations>
-          <toolEnabled>true</toolEnabled>
+          <toolEnabled>false</toolEnabled>
           <useSelectedLocations>false</useSelectedLocations>
         </selectedHostsTool>
       </entry>

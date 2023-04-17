@@ -25,7 +25,7 @@ public class LogInScreen extends Utils {
 	String logInPageWelcomeMessage_AccessibilityId = "Welcome Back!";
 	String logInPageLogInMessage_AccessibilityId = "Please log in to your account.";
 	String closeMenuButton_Xpath = "(//XCUIElementTypeButton[@name='close_menu_button'])[1]";
-	
+		
 	String goPremium_Xpath = "//XCUIElementTypeCell[@name=\"remove_ads_cell\"]";
 	String manageSubscription_Xpath = "//XCUIElementTypeCell[@name=\"manage_subscriptions_cell\"]";
 	String signOut_Xpath = "//XCUIElementTypeCell[@name=\"signout_cell\"]";
@@ -44,6 +44,7 @@ public class LogInScreen extends Utils {
 	String youAreAllSetText_Xpath = "//XCUIElementTypeStaticText[@name=\"You’re all set.\"]";
 	String youAreAllSetOK_Xpath = "//XCUIElementTypeButton[@name=\"OK\"]";
 	String backButtonFromPremium_Xpath = "//XCUIElementTypeButton[@name=\"Back\"]";
+	String notNow_AccessibilityId = "Not Now";
 
 	
 	By bySettingsButton = MobileBy.AccessibilityId(settingsButton_AccessibilityId);
@@ -75,6 +76,7 @@ public class LogInScreen extends Utils {
 	By byYouAreAllSetText = MobileBy.xpath(youAreAllSetText_Xpath);
 	By byYouAreAllSetOK = MobileBy.xpath(youAreAllSetOK_Xpath);
 	By byBackButtonFromPremium = MobileBy.xpath(backButtonFromPremium_Xpath);
+	By byNotNow = MobileBy.AccessibilityId(notNow_AccessibilityId);
 	
 
 	
@@ -107,6 +109,7 @@ public class LogInScreen extends Utils {
 	MobileElement youAreAllSetText = null;
 	MobileElement youAreAllSetOK = null;
 	MobileElement backButtonFromPremium = null;
+	MobileElement notNow =  null;
 
 	public LogInScreen(AppiumDriver<MobileElement> Ad) {
 		this.Ad = Ad;
@@ -134,8 +137,19 @@ public class LogInScreen extends Utils {
 		logInButton = Ad.findElement(byLogInButton);
 		TestBase.typeText(email, "Email", emailAddress);
 		TestBase.typeText(password, "Password", pwd);
+		attachScreen();
 		TestBase.clickOnElement(byLogInButton, logInButton, "LogIn Button");
 		attachScreen();
+		try {
+			notNow = Ad.findElement(byNotNow);
+			System.out.println("Save Password window displalyed");
+			logStep("Save Password window displalyed");
+			TestBase.clickOnElement(byNotNow, notNow, "Not Now Button Of Save Password");
+			attachScreen();
+		} catch(Exception e) {
+			System.out.println("Save Password window not displalyed");
+			logStep("Save Password window not displalyed");
+		}
 		TestBase.waitForVisibilityOfElementLocated(Ad, 90, byCloseMenuButton);
 		closeMenuButton = Ad.findElement(byCloseMenuButton);
 		TestBase.clickOnElement(byCloseMenuButton, closeMenuButton, "Done Button");

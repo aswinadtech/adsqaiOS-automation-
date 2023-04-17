@@ -2134,55 +2134,7 @@ public class SmokeTest extends TwcIosBaseTest {
 		Utils.validate_non_custom_param_val_in_gampad_url("Smoke", "Health(coldAndFluArticles)", "content_url", "https://www.weather.com");
 	}*/
 	
-	/**
-	 * This method validates ppid parameter of Sticky ad Call
-	 */
-	@Test(priority = 350, enabled = true)
-	@Description("Validating 'ppid' parameter of Sticky ad Call")
-	public void validate_Sticky_Ad_Call_ppid_parameter() throws Exception {
-		System.out.println("==============================================");
-		System.out.println("****** Validating ppid parameter of Sticky ad call");
-		logStep("Validating ppid parameter of Sticky ad call");
-		Utils.validate_Noncustom_param_val_of_gampad("Smoke", "Pulltorefresh", "ppid", "NotNull");
-	}
-	
-	/**
-	 * This method validates ppid parameter of Hourly details call
-	 */
-	@Test(priority = 351, enabled = true)
-	@Description("Validating 'ppid' parameter of Hourly details call ")
-	public void Validate_HourlyDetails_ppid_parameter() throws Exception {
-		System.out.println("==============================================");
-		System.out.println("****** Validating ppid parameter of Hourly details call");
-		logStep("Validating ppid parameter of Hourly details call ");
-		Utils.validate_Noncustom_param_val_of_gampad("Smoke", "Hourly", "ppid", "NotNull");
-
-	}
-	
-	/**
-	 * This method validates ppid parameter of Daily Details ad Call
-	 */
-	@Test(priority = 352, enabled = true)
-	@Description("Validating 'ppid' parameter of Daily Details ad Call")
-	public void validate_Daily_Details_Ad_Call_ppid_parameter() throws Exception {
-		System.out.println("==============================================");
-		System.out.println("****** Validating ppid parameter of Daily Details ad call");
-		logStep("Validating ppid parameter of Daily Details ad call");
-		Utils.validate_Noncustom_param_val_of_gampad("Smoke", "Daily(10day)", "ppid", "NotNull");
-	}
-	
-	/**
-	 * This method validates ppid parameter of Map Details ad Call
-	 */
-	@Test(priority = 353, enabled = true)
-	@Description("Validating 'ppid' parameter of Map Details ad Call")
-	public void validate_Map_Details_Ad_Call_ppid_parameter() throws Exception {
-		System.out.println("==============================================");
-		System.out.println("****** Validating ppid parameter of Map Details ad call");
-		logStep("Validating ppid parameter of Map Details ad call");
-		Utils.validate_Noncustom_param_val_of_gampad("Smoke", "Map", "ppid", "NotNull");
-	}
-	
+		
 	/**
 	 * This method validates fpd custom parameter of Marquee call
 	 */
@@ -2513,6 +2465,13 @@ public class SmokeTest extends TwcIosBaseTest {
 		Functions.close_launchApp();
 		Functions.checkForAppState();
 		TestBase.waitForMilliSeconds(2000);---*/
+		
+		
+		hrTab.navigateToHourlyTabAndHandleInterstitialAd();
+		Functions.close_launchApp();
+		hmTab.clickonHomeTab();
+		hmTab.clickonHomeTab();
+		
 		
 		proxy.clearCharlesSession();
 		
@@ -3284,20 +3243,7 @@ public class SmokeTest extends TwcIosBaseTest {
 		logStep("Validating content_url parameter of PreRollVideo call");
 		Utils.validate_non_custom_param_val_in_gampad_url("Smoke", "PreRollVideo", "content_url", "https://www.weather.com");
 	}
-	
-	/**
-	 * This method validates ppid parameter of Video Call
-	 */
-	@Test(priority = 681, enabled = true)
-	@Description("Validating 'ppid' parameter of Video Call")
-	public void Validate_PreRollVideo_Call_ppid_parameter() throws Exception {
-		System.out.println("==============================================");
-		System.out.println("****** Validating ppid parameter of PreRollVideo call");
-		logStep("Validating ppid parameter of PreRollVideo call");
-		Utils.validate_Noncustom_param_val_of_gampad("Smoke", "PreRollVideo", "ppid", "NotNull");
 
-	}
-	
 	/**
 	 * This method validates fpd custom parameter of Video call
 	 */

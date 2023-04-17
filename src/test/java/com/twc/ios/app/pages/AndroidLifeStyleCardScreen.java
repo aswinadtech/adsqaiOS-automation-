@@ -180,6 +180,7 @@ public class AndroidLifeStyleCardScreen extends Utils {
 				swipe_Up(Ad);
 				swipe_Up(Ad);
 				swipe_Up(Ad);
+				attachScreen();
 				if (currentIndex.equalsIgnoreCase("Flu") || currentIndex.equalsIgnoreCase("Allergy")) {
 					// to navigate to article pages
 					try {
@@ -189,7 +190,12 @@ public class AndroidLifeStyleCardScreen extends Utils {
 						 * ) .click();
 						 */
 						navigateToArticlesPage();
-						TestBase.waitForMilliSeconds(3000);
+						TestBase.waitForMilliSeconds(10000);
+						if (currentIndex.equalsIgnoreCase("Flu") && videoArticles) {
+							fluVideoArticles = true;
+						} else if (currentIndex.equalsIgnoreCase("Allergy") && videoArticles) {
+							allergyVideoArticles = true;
+						}
 						try {
 							
 							verifyArticlesPageHeader();
@@ -344,6 +350,7 @@ public class AndroidLifeStyleCardScreen extends Utils {
 					swipe_Up(Ad);
 					swipe_Up(Ad);
 					swipe_Up(Ad);
+					attachScreen();
 					if (currentIndex.equalsIgnoreCase("Flu") || currentIndex.equalsIgnoreCase("Allergy")) {
 						// to navigate to article pages
 						try {
@@ -354,6 +361,11 @@ public class AndroidLifeStyleCardScreen extends Utils {
 							 */
 							navigateToArticlesPage();
 							TestBase.waitForMilliSeconds(10000);
+							if (currentIndex.equalsIgnoreCase("Flu") && videoArticles) {
+								fluVideoArticles = true;
+							} else if (currentIndex.equalsIgnoreCase("Allergy") && videoArticles) {
+								allergyVideoArticles = true;
+							}
 							try {
 																
 								/**
@@ -438,6 +450,7 @@ public class AndroidLifeStyleCardScreen extends Utils {
 			articlesLink = Ad.findElement(byArticlesLink);
 			TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");
 			TestBase.waitForVisibilityOfElementLocated(Ad, 120, byVideoArticlesHeader);
+			videoArticles = true;
 		}
 	}
 

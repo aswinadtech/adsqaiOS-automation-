@@ -120,6 +120,9 @@ public class Utils extends Functions {
 	public static LinkedHashMap<String, String> wfxParameters = new LinkedHashMap<String, String>();
 	public static String placeId = null;
 	public static String hlzip = null;
+	public static boolean videoArticles = false;
+	public static boolean fluVideoArticles = false;
+	public static boolean allergyVideoArticles = false;
 
 	public enum CardNames {
 		video, today, news, aq, maps, daily
@@ -10085,6 +10088,12 @@ public class Utils extends Functions {
 		if (nextGenIMadDisplayed && sheetName.equalsIgnoreCase("Pulltorefresh")) {
 			System.out.println("Since IM Ad displayed on App Launch, Homescreen call validation is skipped");
 			logStep("Since IM Ad displayed on App Launch, Homescreen call validation is skipped");
+		} else 	if ((sheetName.equalsIgnoreCase("Health(coldAndFluArticles)") && fluVideoArticles && cust_param.equalsIgnoreCase("ltv")) || (sheetName.equalsIgnoreCase("Health(allergyArticles)") && allergyVideoArticles && cust_param.equalsIgnoreCase("ltv"))) {
+				/*
+				 * Since Criteo bidding not applicable for Video articles, hence checking a condition.
+				 */
+				System.out.println("It looks that Video Articles found and ltv not applicable for Video Articles..Hence skipping validation");
+				logStep("It looks that Video Articles found and ltv not applicable for Video Articles..Hence skipping validation");
 		} else {
 
 			if (!adCallFound) {
@@ -10977,6 +10986,7 @@ public class Utils extends Functions {
 			// adcardname = cardName;
 			cardName = cardName.replaceAll("-card", "");
 			System.out.println("Current Card Name is : " + cardName);
+			logStep("Current Card Name is : " + cardName);
 			if (cardName.contains("health-and-activities")) {
 				cardName = "lifestyle";
 			} else if (cardName.contains("air-quality")) {
@@ -11696,7 +11706,8 @@ public class Utils extends Functions {
 
 							if (flag) {
 								if (innernode.getNodeName().equals("response")) {
-									// System.out.println(innernode.getNodeName());
+									boolean responsebodyfound = false;
+									//System.out.println(innernode.getTextContent());
 									if (innernode.hasChildNodes()) {
 										NodeList n2 = innernode.getChildNodes();
 										for (int k = 0; k < n2.getLength(); k++) {
@@ -11705,6 +11716,7 @@ public class Utils extends Functions {
 												if (innernode2.getNodeType() == Node.ELEMENT_NODE) {
 													Element eElement = (Element) innernode2;
 													if (eElement.getNodeName().equals("body")) {
+														responsebodyfound = true;
 														String content = eElement.getTextContent();
 														istofResponseBodies.add(content);
 														// String tempBparam = get_b_value_inJsonResponseBody(content);
@@ -11720,6 +11732,16 @@ public class Utils extends Functions {
 												}
 											}
 										}
+									}
+									if (!responsebodyfound) {
+										/*
+										 * There are cases, criteo bidding is failed and response returns 204 :no content " 
+										 */
+										System.out.println("Response body not found, may be bidding failed");
+										logStep("Response body not found, may be bidding failed");
+										listOf_criteo_Params.add("-1");
+										System.out.println(cust_param + " Param Values from Criteo API Call is : (response body not found)" );
+										logStep(cust_param + " Param Values from Criteo API Call is : (response body not found)" );
 									}
 								}
 
@@ -12281,106 +12303,113 @@ public class Utils extends Functions {
 
 				} else if (sheetName.equalsIgnoreCase("Health(coldAndFluArticles)")
 						|| sheetName.equalsIgnoreCase("Health(allergyArticles)")) {
-
-					if (!sheetName.equalsIgnoreCase(healthcriteoArticleCheckHappenedSheet)) {
-						healthcriteoArticleCheckHappenedSheet = sheetName;
-						criteoHealthArticlesParamSizeNUrlCheckStartCount = criteoHealthArticlesParamCpmCheckStartCount;
-					}
-					int j;
-					if (criteoHealthArticlesParamCpmCheckStartCount == 0) {
-						j = 0;
-					} else if (cust_param.equalsIgnoreCase("size") || cust_param.equalsIgnoreCase("displayUrl")) {
-						j = criteoHealthArticlesParamSizeNUrlCheckStartCount;
-
+					/*
+					 * Since Criteo bidding not applicable for Video articles, hence checking a condition.
+					 */
+					if ((sheetName.equalsIgnoreCase("Health(coldAndFluArticles)") && fluVideoArticles) || (sheetName.equalsIgnoreCase("Health(allergyArticles)") && allergyVideoArticles)) {
+						System.out.println("It looks that Video Articles found and  Criteo bidding not applicable for Video Articles..Hence skipping validation");
+						logStep("It looks that Video Articles found and  Criteo bidding not applicable for Video Articles..Hence skipping validation");
 					} else {
-						j = criteoHealthArticlesParamCpmCheckStartCount;
-					}
-
-					for (int i = 0; i < maxIterations; i++, j++) {
-						if (cust_param.equalsIgnoreCase("cpm")) {
-							criteoHealthArticlesParamCpmCheckStartCount++;
+						if (!sheetName.equalsIgnoreCase(healthcriteoArticleCheckHappenedSheet)) {
+							healthcriteoArticleCheckHappenedSheet = sheetName;
+							criteoHealthArticlesParamSizeNUrlCheckStartCount = criteoHealthArticlesParamCpmCheckStartCount;
 						}
-
-						if (listOf_criteo_Params.get(j).equalsIgnoreCase("-1")) {
-							criteoBiddingFailCount++;
-							if (listOf_criteo_Params.size() == 1) {
-								System.out.println(
-										"It looks that the only Occurance of Criteo Call bidding is not happened..Hence skipping the further validation...inspect the charles response for more details");
-								logStep("It looks that the only Occurance of Criteo Call bidding is not happened..Hence skipping the further validation...inspect the charles response for more details");
-							} else {
-								System.out.println("It looks that: " + j
-										+ " Occurance of Criteo Call bidding is not happened..Hence skipping the current instance validation...inspect the charles response for more details");
-								logStep("It looks that: " + j
-										+ " Occurance of Criteo Call bidding is not happened..Hence skipping the current instance validation...inspect the charles response for more details");
-							}
+						int j;
+						if (criteoHealthArticlesParamCpmCheckStartCount == 0) {
+							j = 0;
+						} else if (cust_param.equalsIgnoreCase("size") || cust_param.equalsIgnoreCase("displayUrl")) {
+							j = criteoHealthArticlesParamSizeNUrlCheckStartCount;
 
 						} else {
-							criteoBiddingSuccessCount++;
-							if (cust_param.equalsIgnoreCase("displayurl")) {
+							j = criteoHealthArticlesParamCpmCheckStartCount;
+						}
 
-								if (customParamsList.get(i).equalsIgnoreCase("-1")) {
-									System.out.println(i + " Occurance of corresponding " + sheetName + " gampad call: "
-											+ feedCall + " not having parameter " + cust_param);
-									logStep(i + " Occurance of corresponding " + sheetName + " gampad call: " + feedCall
-											+ " not having parameter " + cust_param);
-									failCount++;
+						for (int i = 0; i < maxIterations; i++, j++) {
+							if (cust_param.equalsIgnoreCase("cpm")) {
+								criteoHealthArticlesParamCpmCheckStartCount++;
+							}
+
+							if (listOf_criteo_Params.get(j).equalsIgnoreCase("-1")) {
+								criteoBiddingFailCount++;
+								if (listOf_criteo_Params.size() == 1) {
+									System.out.println(
+											"It looks that the only Occurance of Criteo Call bidding is not happened..Hence skipping the further validation...inspect the charles response for more details");
+									logStep("It looks that the only Occurance of Criteo Call bidding is not happened..Hence skipping the further validation...inspect the charles response for more details");
 								} else {
-									System.out.println(j + " Occurance of Criteo call " + cust_param + " value: "
-											+ listOf_criteo_Params.get(j) + " is  matched with " + i
-											+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
-											+ " value: " + customParamsList.get(i));
-									logStep(j + " Occurance of Criteo call " + cust_param + " value: "
-											+ listOf_criteo_Params.get(j) + " is  matched with " + i
-											+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
-											+ " value: " + customParamsList.get(i));
-
-									successCount++;
+									System.out.println("It looks that: " + j
+											+ " Occurance of Criteo Call bidding is not happened..Hence skipping the current instance validation...inspect the charles response for more details");
+									logStep("It looks that: " + j
+											+ " Occurance of Criteo Call bidding is not happened..Hence skipping the current instance validation...inspect the charles response for more details");
 								}
 
 							} else {
+								criteoBiddingSuccessCount++;
+								if (cust_param.equalsIgnoreCase("displayurl")) {
 
-								if (listOf_criteo_Params.get(j).equalsIgnoreCase(customParamsList.get(i))) {
-									successCount++;
-									/*
-									 * System.out.println("amazon aax " + sheetName +
-									 * " call bid value is matched with corresponding gampad call bid value");
-									 * logStep("amazon aax " + sheetName +
-									 * " call bid value is matched with corresponding gampad call bid value");
-									 */
-
-									System.out.println(j + " Occurance of Criteo call " + cust_param + " value: "
-											+ listOf_criteo_Params.get(j) + " is matched with " + i
-											+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
-											+ " value: " + customParamsList.get(i));
-									logStep(j + " Occurance of Criteo call " + cust_param + " value: "
-											+ listOf_criteo_Params.get(j) + " is matched with " + i
-											+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
-											+ " value: " + customParamsList.get(i));
-									// System.out.println("amazon aax " + sheetName + " call bid value validation is
-									// successful");
-									// logStep("amazon aax " + sheetName + " call bid value vaidation is
-									// successful");
-									// break;
-
-								} else {
 									if (customParamsList.get(i).equalsIgnoreCase("-1")) {
-										System.out.println(i + " Occurance of corresponding " + sheetName
-												+ " gampad call: " + feedCall + " not having parameter " + cust_param);
-										logStep(i + " Occurance of corresponding " + sheetName + " gampad call: "
+										System.out.println(i + " Occurance of corresponding " + sheetName + " gampad call: "
 												+ feedCall + " not having parameter " + cust_param);
+										logStep(i + " Occurance of corresponding " + sheetName + " gampad call: " + feedCall
+												+ " not having parameter " + cust_param);
 										failCount++;
 									} else {
 										System.out.println(j + " Occurance of Criteo call " + cust_param + " value: "
-												+ listOf_criteo_Params.get(j) + " is not matched with " + i
-												+ " Occurance of corresponding " + sheetName + " gampad call "
-												+ cust_param + " value: " + customParamsList.get(i));
+												+ listOf_criteo_Params.get(j) + " is  matched with " + i
+												+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
+												+ " value: " + customParamsList.get(i));
 										logStep(j + " Occurance of Criteo call " + cust_param + " value: "
-												+ listOf_criteo_Params.get(j) + " is not matched with " + i
-												+ " Occurance of corresponding " + sheetName + " gampad call "
-												+ cust_param + " value: " + customParamsList.get(i));
-										failCount++;
+												+ listOf_criteo_Params.get(j) + " is  matched with " + i
+												+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
+												+ " value: " + customParamsList.get(i));
+
+										successCount++;
 									}
 
+								} else {
+
+									if (listOf_criteo_Params.get(j).equalsIgnoreCase(customParamsList.get(i))) {
+										successCount++;
+										/*
+										 * System.out.println("amazon aax " + sheetName +
+										 * " call bid value is matched with corresponding gampad call bid value");
+										 * logStep("amazon aax " + sheetName +
+										 * " call bid value is matched with corresponding gampad call bid value");
+										 */
+
+										System.out.println(j + " Occurance of Criteo call " + cust_param + " value: "
+												+ listOf_criteo_Params.get(j) + " is matched with " + i
+												+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
+												+ " value: " + customParamsList.get(i));
+										logStep(j + " Occurance of Criteo call " + cust_param + " value: "
+												+ listOf_criteo_Params.get(j) + " is matched with " + i
+												+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
+												+ " value: " + customParamsList.get(i));
+										// System.out.println("amazon aax " + sheetName + " call bid value validation is
+										// successful");
+										// logStep("amazon aax " + sheetName + " call bid value vaidation is
+										// successful");
+										// break;
+
+									} else {
+										if (customParamsList.get(i).equalsIgnoreCase("-1")) {
+											System.out.println(i + " Occurance of corresponding " + sheetName
+													+ " gampad call: " + feedCall + " not having parameter " + cust_param);
+											logStep(i + " Occurance of corresponding " + sheetName + " gampad call: "
+													+ feedCall + " not having parameter " + cust_param);
+											failCount++;
+										} else {
+											System.out.println(j + " Occurance of Criteo call " + cust_param + " value: "
+													+ listOf_criteo_Params.get(j) + " is not matched with " + i
+													+ " Occurance of corresponding " + sheetName + " gampad call "
+													+ cust_param + " value: " + customParamsList.get(i));
+											logStep(j + " Occurance of Criteo call " + cust_param + " value: "
+													+ listOf_criteo_Params.get(j) + " is not matched with " + i
+													+ " Occurance of corresponding " + sheetName + " gampad call "
+													+ cust_param + " value: " + customParamsList.get(i));
+											failCount++;
+										}
+
+									}
 								}
 							}
 						}
@@ -12805,106 +12834,113 @@ public class Utils extends Functions {
 
 				} else if (sheetName.equalsIgnoreCase("Health(coldAndFluArticles)")
 						|| sheetName.equalsIgnoreCase("Health(allergyArticles)")) {
-
-					if (!sheetName.equalsIgnoreCase(healthcriteoArticleCheckHappenedSheet)) {
-						healthcriteoArticleCheckHappenedSheet = sheetName;
-						criteoHealthArticlesParamSizeNUrlCheckStartCount = criteoHealthArticlesParamCpmCheckStartCount;
-					}
-					int j;
-					if (criteoHealthArticlesParamCpmCheckStartCount == 0) {
-						j = 0;
-					} else if (cust_param.equalsIgnoreCase("size") || cust_param.equalsIgnoreCase("displayUrl")) {
-						j = criteoHealthArticlesParamSizeNUrlCheckStartCount;
-
+					/*
+					 * Since Criteo bidding not applicable for Video articles, hence checking a condition.
+					 */
+					if ((sheetName.equalsIgnoreCase("Health(coldAndFluArticles)") && fluVideoArticles) || (sheetName.equalsIgnoreCase("Health(allergyArticles)") && allergyVideoArticles)) {
+						System.out.println("It looks that Video Articles found and  Criteo bidding not applicable for Video Articles..Hence skipping validation");
+						logStep("It looks that Video Articles found and  Criteo bidding not applicable for Video Articles..Hence skipping validation");
 					} else {
-						j = criteoHealthArticlesParamCpmCheckStartCount;
-					}
-
-					for (int i = 0; i < maxIterations; i++, j++) {
-						if (cust_param.equalsIgnoreCase("cpm")) {
-							criteoHealthArticlesParamCpmCheckStartCount++;
+						if (!sheetName.equalsIgnoreCase(healthcriteoArticleCheckHappenedSheet)) {
+							healthcriteoArticleCheckHappenedSheet = sheetName;
+							criteoHealthArticlesParamSizeNUrlCheckStartCount = criteoHealthArticlesParamCpmCheckStartCount;
 						}
-
-						if (listOf_criteo_Params.get(j).equalsIgnoreCase("-1")) {
-							criteoBiddingFailCount++;
-							if (listOf_criteo_Params.size() == 1) {
-								System.out.println(
-										"It looks that the only Occurance of Criteo Call bidding is not happened..Hence skipping the further validation...inspect the charles response for more details");
-								logStep("It looks that the only Occurance of Criteo Call bidding is not happened..Hence skipping the further validation...inspect the charles response for more details");
-							} else {
-								System.out.println("It looks that: " + j
-										+ " Occurance of Criteo Call bidding is not happened..Hence skipping the current instance validation...inspect the charles response for more details");
-								logStep("It looks that: " + j
-										+ " Occurance of Criteo Call bidding is not happened..Hence skipping the current instance validation...inspect the charles response for more details");
-							}
+						int j;
+						if (criteoHealthArticlesParamCpmCheckStartCount == 0) {
+							j = 0;
+						} else if (cust_param.equalsIgnoreCase("size") || cust_param.equalsIgnoreCase("displayUrl")) {
+							j = criteoHealthArticlesParamSizeNUrlCheckStartCount;
 
 						} else {
-							criteoBiddingSuccessCount++;
-							if (cust_param.equalsIgnoreCase("displayurl")) {
+							j = criteoHealthArticlesParamCpmCheckStartCount;
+						}
 
-								if (customParamsList.get(i).equalsIgnoreCase("-1")) {
-									System.out.println(i + " Occurance of corresponding " + sheetName + " gampad call: "
-											+ feedCall + " not having parameter " + cust_param);
-									logStep(i + " Occurance of corresponding " + sheetName + " gampad call: " + feedCall
-											+ " not having parameter " + cust_param);
-									failCount++;
+						for (int i = 0; i < maxIterations; i++, j++) {
+							if (cust_param.equalsIgnoreCase("cpm")) {
+								criteoHealthArticlesParamCpmCheckStartCount++;
+							}
+
+							if (listOf_criteo_Params.get(j).equalsIgnoreCase("-1")) {
+								criteoBiddingFailCount++;
+								if (listOf_criteo_Params.size() == 1) {
+									System.out.println(
+											"It looks that the only Occurance of Criteo Call bidding is not happened..Hence skipping the further validation...inspect the charles response for more details");
+									logStep("It looks that the only Occurance of Criteo Call bidding is not happened..Hence skipping the further validation...inspect the charles response for more details");
 								} else {
-									System.out.println(j + " Occurance of Criteo call " + cust_param + " value: "
-											+ listOf_criteo_Params.get(j) + " is  matched with " + i
-											+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
-											+ " value: " + customParamsList.get(i));
-									logStep(j + " Occurance of Criteo call " + cust_param + " value: "
-											+ listOf_criteo_Params.get(j) + " is  matched with " + i
-											+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
-											+ " value: " + customParamsList.get(i));
-
-									successCount++;
+									System.out.println("It looks that: " + j
+											+ " Occurance of Criteo Call bidding is not happened..Hence skipping the current instance validation...inspect the charles response for more details");
+									logStep("It looks that: " + j
+											+ " Occurance of Criteo Call bidding is not happened..Hence skipping the current instance validation...inspect the charles response for more details");
 								}
 
 							} else {
+								criteoBiddingSuccessCount++;
+								if (cust_param.equalsIgnoreCase("displayurl")) {
 
-								if (listOf_criteo_Params.get(j).equalsIgnoreCase(customParamsList.get(i))) {
-									successCount++;
-									/*
-									 * System.out.println("amazon aax " + sheetName +
-									 * " call bid value is matched with corresponding gampad call bid value");
-									 * logStep("amazon aax " + sheetName +
-									 * " call bid value is matched with corresponding gampad call bid value");
-									 */
-
-									System.out.println(j + " Occurance of Criteo call " + cust_param + " value: "
-											+ listOf_criteo_Params.get(j) + " is matched with " + i
-											+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
-											+ " value: " + customParamsList.get(i));
-									logStep(j + " Occurance of Criteo call " + cust_param + " value: "
-											+ listOf_criteo_Params.get(j) + " is matched with " + i
-											+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
-											+ " value: " + customParamsList.get(i));
-									// System.out.println("amazon aax " + sheetName + " call bid value validation is
-									// successful");
-									// logStep("amazon aax " + sheetName + " call bid value vaidation is
-									// successful");
-									// break;
-
-								} else {
 									if (customParamsList.get(i).equalsIgnoreCase("-1")) {
-										System.out.println(i + " Occurance of corresponding " + sheetName
-												+ " gampad call: " + feedCall + " not having parameter " + cust_param);
-										logStep(i + " Occurance of corresponding " + sheetName + " gampad call: "
+										System.out.println(i + " Occurance of corresponding " + sheetName + " gampad call: "
 												+ feedCall + " not having parameter " + cust_param);
+										logStep(i + " Occurance of corresponding " + sheetName + " gampad call: " + feedCall
+												+ " not having parameter " + cust_param);
 										failCount++;
 									} else {
 										System.out.println(j + " Occurance of Criteo call " + cust_param + " value: "
-												+ listOf_criteo_Params.get(j) + " is not matched with " + i
-												+ " Occurance of corresponding " + sheetName + " gampad call "
-												+ cust_param + " value: " + customParamsList.get(i));
+												+ listOf_criteo_Params.get(j) + " is  matched with " + i
+												+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
+												+ " value: " + customParamsList.get(i));
 										logStep(j + " Occurance of Criteo call " + cust_param + " value: "
-												+ listOf_criteo_Params.get(j) + " is not matched with " + i
-												+ " Occurance of corresponding " + sheetName + " gampad call "
-												+ cust_param + " value: " + customParamsList.get(i));
-										failCount++;
+												+ listOf_criteo_Params.get(j) + " is  matched with " + i
+												+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
+												+ " value: " + customParamsList.get(i));
+
+										successCount++;
 									}
 
+								} else {
+
+									if (listOf_criteo_Params.get(j).equalsIgnoreCase(customParamsList.get(i))) {
+										successCount++;
+										/*
+										 * System.out.println("amazon aax " + sheetName +
+										 * " call bid value is matched with corresponding gampad call bid value");
+										 * logStep("amazon aax " + sheetName +
+										 * " call bid value is matched with corresponding gampad call bid value");
+										 */
+
+										System.out.println(j + " Occurance of Criteo call " + cust_param + " value: "
+												+ listOf_criteo_Params.get(j) + " is matched with " + i
+												+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
+												+ " value: " + customParamsList.get(i));
+										logStep(j + " Occurance of Criteo call " + cust_param + " value: "
+												+ listOf_criteo_Params.get(j) + " is matched with " + i
+												+ " Occurance of corresponding " + sheetName + " gampad call " + cust_param
+												+ " value: " + customParamsList.get(i));
+										// System.out.println("amazon aax " + sheetName + " call bid value validation is
+										// successful");
+										// logStep("amazon aax " + sheetName + " call bid value vaidation is
+										// successful");
+										// break;
+
+									} else {
+										if (customParamsList.get(i).equalsIgnoreCase("-1")) {
+											System.out.println(i + " Occurance of corresponding " + sheetName
+													+ " gampad call: " + feedCall + " not having parameter " + cust_param);
+											logStep(i + " Occurance of corresponding " + sheetName + " gampad call: "
+													+ feedCall + " not having parameter " + cust_param);
+											failCount++;
+										} else {
+											System.out.println(j + " Occurance of Criteo call " + cust_param + " value: "
+													+ listOf_criteo_Params.get(j) + " is not matched with " + i
+													+ " Occurance of corresponding " + sheetName + " gampad call "
+													+ cust_param + " value: " + customParamsList.get(i));
+											logStep(j + " Occurance of Criteo call " + cust_param + " value: "
+													+ listOf_criteo_Params.get(j) + " is not matched with " + i
+													+ " Occurance of corresponding " + sheetName + " gampad call "
+													+ cust_param + " value: " + customParamsList.get(i));
+											failCount++;
+										}
+
+									}
 								}
 							}
 						}

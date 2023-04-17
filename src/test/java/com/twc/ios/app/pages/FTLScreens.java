@@ -17,6 +17,7 @@ public class FTLScreens extends Utils {
 	AppiumDriver<MobileElement> Ad;
 	String settingsButton_AccessibilityId = "settingsButton";
 	String closeButton_AccessibilityId = "close_button";
+	String closePremium_AccessibilityId = "Close";
 	String cancelButton_Name = "Cancel";
 	String changeToAlwaysAllow_Name = "Change to Always Allow";
 	String letsGoButton_AccessibilityId = "letsGoButton";
@@ -29,6 +30,7 @@ public class FTLScreens extends Utils {
 	
 	By bySettingsButton = MobileBy.AccessibilityId(settingsButton_AccessibilityId);
 	By byCloseButton = MobileBy.AccessibilityId(closeButton_AccessibilityId);
+	By byClosePremium = MobileBy.AccessibilityId(closePremium_AccessibilityId);
 	By byCancelButton = MobileBy.name(cancelButton_Name);
 	By byChangeToAlwaysAllow = MobileBy.name(changeToAlwaysAllow_Name);
 	By byLetsGoButton = MobileBy.AccessibilityId(letsGoButton_AccessibilityId);
@@ -44,6 +46,7 @@ public class FTLScreens extends Utils {
 	
 	MobileElement settingsButton = null;
 	MobileElement closeButton = null;
+	MobileElement closePremium = null;
 	MobileElement cancelButton = null;
 	MobileElement changeToAlwaysAllow = null;
 	MobileElement letsGoButton = null;
@@ -94,8 +97,16 @@ public class FTLScreens extends Utils {
 					System.out.println("Premium Big Ad displayed on the screen and closed");
 					logStep("Premium Big Ad displayed on the screen and closed");
 				} catch (Exception e1) {
-					System.out.println("Premium Big Ad not displayed on the screen");
-					logStep("Premium Big Ad not displayed on the screen");
+					try {
+						TestBase.waitForVisibilityOfElementLocated(Ad, 10, byClosePremium);
+						closePremium = Ad.findElement(byClosePremium);
+						TestBase.clickOnElement(byClosePremium, closePremium, "Close Button");
+						System.out.println("Premium Big Ad displayed on the screen and closed");
+						logStep("Premium Big Ad displayed on the screen and closed");
+					} catch (Exception e2) {
+						System.out.println("Premium Big Ad not displayed on the screen");
+						logStep("Premium Big Ad not displayed on the screen");
+					}
 				}
 			}
 		} catch (Exception e1) {
@@ -318,8 +329,16 @@ public class FTLScreens extends Utils {
 						System.out.println("Premium Big Ad displayed on the screen and closed");
 						logStep("Premium Big Ad displayed on the screen and closed");
 					} catch (Exception e1) {
-						System.out.println("Premium Big Ad not displayed on the screen");
-						logStep("Premium Big Ad not displayed on the screen");
+						try {
+							TestBase.waitForVisibilityOfElementLocated(Ad, 10, byClosePremium);
+							closePremium = Ad.findElement(byClosePremium);
+							TestBase.clickOnElement(byClosePremium, closePremium, "Close Button");
+							System.out.println("Premium Big Ad displayed on the screen and closed");
+							logStep("Premium Big Ad displayed on the screen and closed");
+						} catch (Exception e2) {
+							System.out.println("Premium Big Ad not displayed on the screen");
+							logStep("Premium Big Ad not displayed on the screen");
+						}
 					}
 				}
 				isSettingsButtonDisplayed = true;
@@ -624,8 +643,16 @@ public class FTLScreens extends Utils {
 						System.out.println("Premium Big Ad displayed on the screen and closed");
 						logStep("Premium Big Ad displayed on the screen and closed");
 					} catch (Exception e1) {
-						System.out.println("Premium Big Ad not displayed on the screen");
-						logStep("Premium Big Ad not displayed on the screen");
+						try {
+							TestBase.waitForVisibilityOfElementLocated(Ad, 10, byClosePremium);
+							closePremium = Ad.findElement(byClosePremium);
+							TestBase.clickOnElement(byClosePremium, closePremium, "Close Button");
+							System.out.println("Premium Big Ad displayed on the screen and closed");
+							logStep("Premium Big Ad displayed on the screen and closed");
+						} catch (Exception e2) {
+							System.out.println("Premium Big Ad not displayed on the screen");
+							logStep("Premium Big Ad not displayed on the screen");
+						}
 					}
 				}
 				isSettingsButtonDisplayed = true;
@@ -928,8 +955,16 @@ public class FTLScreens extends Utils {
 					System.out.println("Premium Big Ad displayed on the screen and closed");
 					logStep("Premium Big Ad displayed on the screen and closed");
 				} catch (Exception e1) {
-					System.out.println("Premium Big Ad not displayed on the screen");
-					logStep("Premium Big Ad not displayed on the screen");
+					try {
+						TestBase.waitForVisibilityOfElementLocated(Ad, 10, byClosePremium);
+						closePremium = Ad.findElement(byClosePremium);
+						TestBase.clickOnElement(byClosePremium, closePremium, "Close Button");
+						System.out.println("Premium Big Ad displayed on the screen and closed");
+						logStep("Premium Big Ad displayed on the screen and closed");
+					} catch (Exception e2) {
+						System.out.println("Premium Big Ad not displayed on the screen");
+						logStep("Premium Big Ad not displayed on the screen");
+					}
 				}
 			}
 		} catch (Exception e1) {
@@ -1010,8 +1045,16 @@ public class FTLScreens extends Utils {
 					System.out.println("Premium Big Ad displayed on the screen and closed");
 					logStep("Premium Big Ad displayed on the screen and closed");
 				} catch (Exception e1) {
-					System.out.println("Premium Big Ad not displayed on the screen");
-					logStep("Premium Big Ad not displayed on the screen");
+					try {
+						TestBase.waitForVisibilityOfElementLocated(Ad, 10, byClosePremium);
+						closePremium = Ad.findElement(byClosePremium);
+						TestBase.clickOnElement(byClosePremium, closePremium, "Close Button");
+						System.out.println("Premium Big Ad displayed on the screen and closed");
+						logStep("Premium Big Ad displayed on the screen and closed");
+					} catch (Exception e2) {
+						System.out.println("Premium Big Ad not displayed on the screen");
+						logStep("Premium Big Ad not displayed on the screen");
+					}
 				}
 			}
 		} catch (Exception e1) {
@@ -1225,8 +1268,16 @@ public class FTLScreens extends Utils {
 					System.out.println("Premium Big Ad displayed on the screen and closed");
 					logStep("Premium Big Ad displayed on the screen and closed");
 				} catch (Exception e1) {
-					System.out.println("Premium Big Ad not displayed on the screen");
-					logStep("Premium Big Ad not displayed on the screen");
+					try {
+						TestBase.waitForVisibilityOfElementLocated(Ad, 10, byClosePremium);
+						closePremium = Ad.findElement(byClosePremium);
+						TestBase.clickOnElement(byClosePremium, closePremium, "Close Button");
+						System.out.println("Premium Big Ad displayed on the screen and closed");
+						logStep("Premium Big Ad displayed on the screen and closed");
+					} catch (Exception e2) {
+						System.out.println("Premium Big Ad not displayed on the screen");
+						logStep("Premium Big Ad not displayed on the screen");
+					}
 				}
 			}
 		} catch (Exception e1) {

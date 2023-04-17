@@ -177,7 +177,12 @@ public class LifeStyleCardScreen extends Utils {
 						 * ) .click();
 						 */
 						navigateToArticlesPage();
-						TestBase.waitForMilliSeconds(3000);
+						TestBase.waitForMilliSeconds(10000);
+						if (currentIndex.equalsIgnoreCase("Flu") && videoArticles) {
+							fluVideoArticles = true;
+						} else if (currentIndex.equalsIgnoreCase("Allergy") && videoArticles) {
+							allergyVideoArticles = true;
+						}
 						try {
 							
 							verifyArticlesPageHeader();
@@ -325,6 +330,7 @@ public class LifeStyleCardScreen extends Utils {
 					swipe_Up(Ad);
 					swipe_Up(Ad);
 					swipe_Up(Ad);
+					attachScreen();
 					if (currentIndex.equalsIgnoreCase("Flu") || currentIndex.equalsIgnoreCase("Allergy")) {
 						// to navigate to article pages
 						try {
@@ -335,6 +341,11 @@ public class LifeStyleCardScreen extends Utils {
 							 */
 							navigateToArticlesPage();
 							TestBase.waitForMilliSeconds(10000);
+							if (currentIndex.equalsIgnoreCase("Flu") && videoArticles) {
+								fluVideoArticles = true;
+							} else if (currentIndex.equalsIgnoreCase("Allergy") && videoArticles) {
+								allergyVideoArticles = true;
+							}
 							try {
 								
 								/**
@@ -405,6 +416,7 @@ public class LifeStyleCardScreen extends Utils {
 			byArticlesLink = MobileBy.xpath("(//XCUIElementTypeStaticText[@label='Latest News']/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeButton)[1]");
 			articlesLink = Ad.findElement(byArticlesLink);
 			TestBase.clickOnElement(byArticlesLink, articlesLink, "Articles Link");
+			videoArticles = true;
 		}
 	}
 

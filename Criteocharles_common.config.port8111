@@ -122,12 +122,6 @@
     <checkUpdates>false</checkUpdates>
     <maximised>false</maximised>
     <fullscreen>false</fullscreen>
-    <mainWindow>
-      <x>20</x>
-      <y>48</y>
-      <width>900</width>
-      <height>694</height>
-    </mainWindow>
     <lastCheckUpdates>2017-06-30 06:35:41.478 UTC</lastCheckUpdates>
   </startupConfiguration>
   <userInterfaceConfiguration>
@@ -170,18 +164,6 @@
       </entry>
       <entry>
         <string>ChartPanel.DURATION_TABLE_COLUMN_STATES</string>
-        <columnStates/>
-      </entry>
-      <entry>
-        <string>SessionFrame.splitPlane.dividerLocation.vertical</string>
-        <int>200</int>
-      </entry>
-      <entry>
-        <string>SessionFrame.navTabs.mode</string>
-        <string>Sequence</string>
-      </entry>
-      <entry>
-        <string>URLEncodedQueryViewer.TABLE_COLUMN_STATES</string>
         <columnStates/>
       </entry>
       <entry>
@@ -249,7 +231,7 @@
       <entry>
         <string>Rewrite</string>
         <rewrite>
-          <toolEnabled>false</toolEnabled>
+          <toolEnabled>true</toolEnabled>
           <debugging>false</debugging>
           <sets>
             <rewriteSet>
