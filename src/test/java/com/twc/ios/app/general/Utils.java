@@ -9001,7 +9001,7 @@ public class Utils extends Functions {
 	 */
 	public static void loadWeatherFXAPIParameterValuestoMap_ByZipCode(String zipCode) throws Exception {
 		
-		if (Ad instanceof AndroidDriver<?>) {
+		/*if (Ad instanceof AndroidDriver<?>) {
 			Utils.load_param_value_from_APICalls("wfxtg", zipCode, false);
 			Utils.load_param_value_from_APICalls("cxtg", zipCode, false);
 			Utils.load_param_value_from_APICalls("zcs", zipCode, false);
@@ -9013,7 +9013,15 @@ public class Utils extends Functions {
 			Utils.load_param_value_from_APICalls_V2("zcs", zipCode, false, "4", "US");
 			Utils.load_param_value_from_APICalls_V2("hzcs", Utils.hlzip, false, "4", "US");
 			Utils.load_param_value_from_APICalls_V2("nzcs", zipCode, false, "4", "US");
-		}
+		}*/
+		
+		
+		Utils.load_param_value_from_APICalls_V2("wfxtg", Utils.hlzip, false, "4", "US");
+		Utils.load_param_value_from_APICalls_V2("cxtg", zipCode, false, "4", "US");
+		Utils.load_param_value_from_APICalls_V2("zcs", zipCode, false, "4", "US");
+		Utils.load_param_value_from_APICalls_V2("hzcs", Utils.hlzip, false, "4", "US");
+		Utils.load_param_value_from_APICalls_V2("nzcs", zipCode, false, "4", "US");
+		
 		
 
 	}
@@ -9515,6 +9523,9 @@ public class Utils extends Functions {
 									countryCode = "IN";
 								}
 								mainTag = (JSONObject) mainTag.get(JsonValues[1].trim()+":"+zipCode+":"+constant+":"+countryCode);
+								if (zipCode.equalsIgnoreCase("nl")) {
+									mainTag = (JSONObject) mainTag.get(JsonValues[1].trim()+":"+"__IP_POSTAL_CODE__");
+								}
 							} else {
 								mainTag = (JSONObject) mainTag.get(JsonValues[1].trim());
 							}
@@ -10355,20 +10366,22 @@ public class Utils extends Functions {
 					|| cust_param.equalsIgnoreCase("nzcs")) {
 				expected = wfxParameters.get(cust_param);
 			} else {
-				if (Ad instanceof AndroidDriver<?>) {
+				/*if (Ad instanceof AndroidDriver<?>) {
 					expected = get_param_value_from_APICalls(cust_param, zipCode);
 				} else {
 					expected = get_param_value_from_APICalls_V2(cust_param, zipCode, "4", "US");
-				}
+				}*/
+				expected = get_param_value_from_APICalls_V2(cust_param, zipCode, "4", "US");
 				
 			}
 
 		} else {
-			if (Ad instanceof AndroidDriver<?>) {
+			/*if (Ad instanceof AndroidDriver<?>) {
 				expected = get_param_value_from_APICalls(cust_param, zipCode);
 			} else {
 				expected = get_param_value_from_APICalls_V2(cust_param, zipCode, "4", "US");
-			}
+			}*/
+			expected = get_param_value_from_APICalls_V2(cust_param, zipCode, "4", "US");
 			
 		}
 

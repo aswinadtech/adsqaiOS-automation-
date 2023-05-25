@@ -166,6 +166,11 @@ public class AndroidSmokeTest extends TwcIosBaseTest {
 		aqCardScreen = new AndroidAirQualityCardScreen(Ad);
 		fOneCardScreen = new AndroidFeedOneCardScreen(Ad);
 		
+		Utils.get_v3_wx_forecast_daily_15day_data();
+		Utils.hlzip = Utils.get_custom_param_val_of_gampad("Smoke", "Marquee", "hlzip");
+		System.out.println("hlzip value is: "+Utils.hlzip);
+		logStep("hlzip value is: "+Utils.hlzip);
+		
 	}
 	
 /*	@Test(priority = 51, enabled = true)
@@ -262,7 +267,7 @@ public class AndroidSmokeTest extends TwcIosBaseTest {
 			Functions.close_launchAppAndroid();
 			proxy.getXml();
 			Utils.createXMLFileForCharlesSessionFile();
-			ParseForVideoOrderedList.getVideoCall_IU_Value_from_adZone();
+			//ParseForVideoOrderedList.getVideoCall_IU_Value_from_adZone();
 			Utils.get_v3_wx_forecast_daily_15day_data();
 			Utils.getPlaceIdFromAPICall("placeId");
 			//Utils.Verify_newfeedAdcalls("Smoke", "CleanLaunch");
@@ -2138,6 +2143,84 @@ public class AndroidSmokeTest extends TwcIosBaseTest {
 	}*/
 	
 	/**
+	 * This method validates fpd custom parameter of Marquee call
+	 */
+	@Test(priority = 360, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Marquee call ")
+	public void Validate_Marquee_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Marquee call");
+		logStep("Validating fpd custom parameter of Marquee call ");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Marquee", "fpd", "nl");
+
+	}
+	
+	/**
+	 * This method validates fpd custom parameter of Feed1 call
+	 */
+	@Test(priority = 361, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Feed1 call ")
+	public void Validate_Feed1_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Feed1 call");
+		logStep("Validating fpd custom parameter of Feed1 call ");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Feed1", "fpd", "nl");
+
+	}
+
+	/**
+	 * This method validates fpd custom parameter of Hourly details call
+	 */
+	@Test(priority = 362, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Hourly details call ")
+	public void Validate_HourlyDetails_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Hourly details call");
+		logStep("Validating fpd custom parameter of Hourly details call ");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Hourly", "fpd", "nl");
+
+	}
+	
+	/**
+	 * This method validates fpd custom parameter of Homescreen adhesive call
+	 */
+	@Test(priority = 363, enabled = true)
+	@Description("Validating 'fpd' custom parameter of HomeScreen Adhesive call ")
+	public void Validate_HomeScreen_Call_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of HomeScreen adhesive call");
+		logStep("Validating fpd custom parameter of HomeScreen adhesive call");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Pulltorefresh", "fpd", "nl");
+
+	}
+	
+	/**
+	 * This method validates fpd custom parameter of Daily details call
+	 */
+	@Test(priority = 364, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Daily details call ")
+	public void Validate_DailyDetails_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Daily details call");
+		logStep("Validating fpd custom parameter of Daily details call");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Daily(10day)", "fpd", "nl");
+
+	}
+	
+	/**
+	 * This method validates fpd custom parameter of Map details call
+	 */
+	@Test(priority = 365, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Map details call ")
+	public void Validate_MapDetails_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Map details call");
+		logStep("Validating fpd custom parameter of Map details call");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "Map", "fpd", "nl");
+
+	}
+	
+	/**
 	 * This method validate the daily details ad units and its parameters To execute
 	 * below method alone, Utils.get_v3_wx_forecast_daily_15day_data() to be
 	 * executed as a prerequisite script
@@ -2280,7 +2363,7 @@ public class AndroidSmokeTest extends TwcIosBaseTest {
 		Functions.close_launchAppAndroid();
 		//Functions.checkForAppState();
 		//addrScreen.enternewAddress(false, "30124", "Cave Spring, Georgia");
-		addrScreen.enter_requiredLocation("30124");
+		/*addrScreen.enter_requiredLocation("30124");
 		TestBase.waitForMilliSeconds(20000);
 		//addrScreen.enternewAddress(false, "07095", "Woodbridge, New Jersey");
 		addrScreen.enter_requiredLocation("07095");
@@ -2291,7 +2374,9 @@ public class AndroidSmokeTest extends TwcIosBaseTest {
 		proxy.clearCharlesSession();
 		Functions.close_launchAppAndroid();
 		//Functions.checkForAppState();
-		TestBase.waitForMilliSeconds(2000);
+		TestBase.waitForMilliSeconds(2000);*/
+		
+		proxy.clearCharlesSession();
 		//addrScreen.enternewAddress(false, "30124", "Cave Spring, Georgia");
 		addrScreen.enter_requiredLocation("30124");
 		TestBase.waitForMilliSeconds(20000);
@@ -2310,6 +2395,9 @@ public class AndroidSmokeTest extends TwcIosBaseTest {
 		proxy.getXml();
 		Utils.createXMLFileForCharlesSessionFile();
 		// Utils.get_v3_wx_forecast_daily_15day_data();
+		/*Utils.hlzip = Utils.get_custom_param_val_of_gampad("Smoke", "Hourly", "hlzip");
+		System.out.println("hlzip value is: "+Utils.hlzip);
+		logStep("hlzip value is: "+Utils.hlzip);*/
 
 	}
 
@@ -2546,6 +2634,9 @@ public class AndroidSmokeTest extends TwcIosBaseTest {
 		//Functions.checkForAppState();
 		// addrScreen.enternewAddress(false, "Atlanta, Georgia");
 		//addrScreen.enternewAddress(false, "07095", "Woodbridge, New Jersey");
+		
+		proxy.clearCharlesSession();
+		
 		addrScreen.enter_requiredLocation("07095");
 		TestBase.waitForMilliSeconds(20000);
 		proxy.getXml();
@@ -2751,6 +2842,19 @@ public class AndroidSmokeTest extends TwcIosBaseTest {
 		System.out.println("****** Validating content_url parameter of PreRollVideo call");
 		logStep("Validating content_url parameter of PreRollVideo call");
 		Utils.validate_non_custom_param_val_in_gampad_url("Smoke", "PreRollVideo", "content_url", "https://www.weather.com");
+	}
+	
+	/**
+	 * This method validates fpd custom parameter of Video call
+	 */
+	@Test(priority = 682, enabled = true)
+	@Description("Validating 'fpd' custom parameter of Video call ")
+	public void Validate_PreRollVideo_fpd_Custom_param() throws Exception {
+		System.out.println("==============================================");
+		System.out.println("****** Validating fpd custom parameter of Video call");
+		logStep("Validating fpd custom parameter of Video call");
+		Utils.validate_custom_param_val_of_gampad("Smoke", "PreRollVideo", "fpd", false);
+		
 	}
 
 	/**

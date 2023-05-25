@@ -93,7 +93,7 @@ public class NewsCardScreen extends Utils {
 		} catch (Exception e) {
 			System.out.println("News Details not displayed");
 			logStep("News Details not displayed");
-			// attachScreen();
+			attachScreen();
 		}
 	}
 	

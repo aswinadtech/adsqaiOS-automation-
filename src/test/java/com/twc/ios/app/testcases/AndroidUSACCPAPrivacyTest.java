@@ -578,7 +578,7 @@ public class AndroidUSACCPAPrivacyTest extends TwcIosBaseTest {
 		System.out.println("==============================================");
 		System.out.println("****** triggers.wfxtriggers.com Call test case Started when privacy optout");
 		logStep("****** triggers.wfxtriggers.com Call test case Started when privacy optout");
-		Utils.verifyAPICal("Smoke", "WFXTrigger", true);
+		Utils.verifyAPICal("Smoke", "WFXTrigger", false);
 
 	}
 

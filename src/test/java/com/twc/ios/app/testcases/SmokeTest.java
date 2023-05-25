@@ -168,7 +168,7 @@ public class SmokeTest extends TwcIosBaseTest {
 		
 		System.out.println("****** Consent Calls Verification On FTL Started");
 		logStep("****** Consent Calls Verification On FTL Started");
-		ftlScreens.verifyNoOfConsentCallsOnFTL();
+		ftlScreens.verifyNoOfConsentCallsOnFTL(5);
 	}
 	
 	@Test(priority = 75, enabled = true)

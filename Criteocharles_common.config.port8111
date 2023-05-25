@@ -122,6 +122,12 @@
     <checkUpdates>false</checkUpdates>
     <maximised>false</maximised>
     <fullscreen>false</fullscreen>
+    <mainWindow>
+      <x>20</x>
+      <y>48</y>
+      <width>900</width>
+      <height>694</height>
+    </mainWindow>
     <lastCheckUpdates>2017-06-30 06:35:41.478 UTC</lastCheckUpdates>
   </startupConfiguration>
   <userInterfaceConfiguration>

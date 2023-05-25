@@ -62,7 +62,7 @@ public class FTLScreens extends Utils {
 	}
 
 	@Step("Verify No Of Consent Calls On FTL")
-	public void verifyNoOfConsentCallsOnFTL() throws Exception {
+	public void verifyNoOfConsentCallsOnFTL(int noOfCalls) throws Exception {
 	/**
 	 * There should be 4 Consent calls be generated on FTL,  
 	 * location-apps-2: two calls
@@ -71,7 +71,7 @@ public class FTLScreens extends Utils {
 	 */
 		int value = Utils.getNoOfOccurancesOfAPICallWithHostandPath("upsx.weather.com", "/consent");
 		System.out.println("No Of Consent Calls found are: "+value);
-		Assert.assertEquals(value, 4);
+		Assert.assertEquals(value, noOfCalls);
 	}
 	
 	@Step("Handle Unwanted Popups during app launch")

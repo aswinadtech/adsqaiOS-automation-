@@ -4742,6 +4742,7 @@ public class Functions extends Driver {
 			 * el.getSize(); System.out.println("Element Dimensions " + dim ); }
 			 */
 			System.out.println("********************************************");
+			logStep("********************************************");
 			By byele = MobileBy.xpath("//XCUIElementTypeCollectionView[@y='0']/XCUIElementTypeCell[1]");
 			MobileElement ele = Ad.findElement(byele);
 			Point loc = ele.getLocation();
@@ -4759,6 +4760,7 @@ public class Functions extends Driver {
 			//if (startY == 88 || startY <= 88) {
 			if (startY == offsetY || startY <= offsetY) {
 				System.out.println("*******retrieving second card*******");
+				logStep("*******retrieving second card*******");
 				byele = MobileBy.xpath("//XCUIElementTypeCollectionView[@y='0']/XCUIElementTypeCell[2]");
 				ele = Ad.findElement(byele);
 				loc = ele.getLocation();
@@ -4776,6 +4778,7 @@ public class Functions extends Driver {
 				//if (startY == 88 || startY <= 88) {
 				if (startY == offsetY || startY <= offsetY) {
 					System.out.println("*******retrieving third card*******");
+					logStep("*******retrieving third card*******");
 					byele = MobileBy.xpath("//XCUIElementTypeCollectionView[@y='0']/XCUIElementTypeCell[3]");
 					ele = Ad.findElement(byele);
 					loc = ele.getLocation();
@@ -4954,10 +4957,19 @@ public class Functions extends Driver {
 				}
 
 				//performScrollTouchAction(1, startY, 0, moveY);
-				if (startY - offsetY > 625) {
+				/*if (startY - offsetY > 625) {
 					System.out.println("Since Card position  >625, reducing startY valueto 625 to avoid press on sticky ad ");
 					logStep("Since Card position >625, reducing startY valueto 625 to avoid press on sticky ad ");
 					startY = 625;
+					performScrollTouchAction(1, startY, 0, moveY);
+				} else {
+					performScrollTouchAction(1, startY, 0, moveY);
+				}*/
+				
+				if (startY - offsetY > 560) {
+					System.out.println("Since Card position  >560, reducing startY valueto 560 to avoid press on sticky ad ");
+					logStep("Since Card position >560, reducing startY valueto 560 to avoid press on sticky ad ");
+					startY = 560;
 					performScrollTouchAction(1, startY, 0, moveY);
 				} else {
 					performScrollTouchAction(1, startY, 0, moveY);
@@ -5055,6 +5067,7 @@ public class Functions extends Driver {
 		//while (!elementFound && !footerElementFound && ((currTime - startTime) <= duration)) {
 		while (!elementFound && !footerElementFound) {
 			System.out.println("********************************************");
+			logStep("********************************************");
 			By byele = MobileBy.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.weather.Weather:id/home_screen_list_view\"]/android.widget.FrameLayout[1]");
 			MobileElement ele = Ad.findElement(byele);
 			Point loc = ele.getLocation();
@@ -5071,6 +5084,7 @@ public class Functions extends Driver {
 			//if (startY - offsetY <= 15) {
 			if ((int) (dim.height) <= 15) {
 				System.out.println("*******retrieving second card*******");
+				logStep("*******retrieving second card*******");
 				byele = MobileBy.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.weather.Weather:id/home_screen_list_view\"]/android.widget.FrameLayout[2]");
 				ele = Ad.findElement(byele);
 				loc = ele.getLocation();
@@ -5086,6 +5100,7 @@ public class Functions extends Driver {
 				//if (startY - offsetY <= 15) {
 				if ((int) (dim.height) <= 15) {
 					System.out.println("*******retrieving third card*******");
+					logStep("*******retrieving third card*******");
 					byele = MobileBy.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.weather.Weather:id/home_screen_list_view\"]/android.widget.FrameLayout[3]");
 					ele = Ad.findElement(byele);
 					loc = ele.getLocation();
@@ -5349,8 +5364,12 @@ public class Functions extends Driver {
 		boolean footerElementFound = false;
 		footerElementFound = TestBase.isElementDisplayed(byFooterCard);
 		while (!elementFound && !footerElementFound && ((currTime - startTime) <= cduration)) {
+			System.out.println("********************************************");
+			logStep("********************************************");
 			System.out.println("Time Difference is: "+(currTime - startTime));
 			logStep("Time Difference is: "+(currTime - startTime));
+			System.out.println("cduration is: "+cduration);
+			logStep("cduration is: "+cduration);
 			/*
 			 * List<MobileElement> els = Ad.findElements(MobileBy.xpath(
 			 * "//XCUIElementTypeCollectionView[@y='0']/XCUIElementTypeCell"));
@@ -5360,7 +5379,7 @@ public class Functions extends Driver {
 			 * System.out.println("Element located at " + loc ); Dimension dim =
 			 * el.getSize(); System.out.println("Element Dimensions " + dim ); }
 			 */
-			System.out.println("********************************************");
+			
 			By byele = MobileBy.xpath("//XCUIElementTypeCollectionView[@y='0']/XCUIElementTypeCell[1]");
 			ele = Ad.findElement(byele);
 			Point loc = ele.getLocation();
@@ -5396,6 +5415,7 @@ public class Functions extends Driver {
 				//if (startY == 88 || startY <= 88) {
 				if (startY == offsetY || startY <= offsetY) {
 					System.out.println("*******retrieving third card*******");
+					logStep("*******retrieving third card*******");
 					byele = MobileBy.xpath("//XCUIElementTypeCollectionView[@y='0']/XCUIElementTypeCell[3]");
 					ele = Ad.findElement(byele);
 					loc = ele.getLocation();
@@ -5601,10 +5621,10 @@ public class Functions extends Driver {
 
 					break;
 				} else {
-					if (startY - offsetY > 625) {
-						System.out.println("Since Card position  >625, reducing startY valueto 625 to avoid press on sticky ad ");
-						logStep("Since Card position >625, reducing startY valueto 625 to avoid press on sticky ad ");
-						startY = 625;
+					if (startY - offsetY > 560) {
+						System.out.println("Since Card position  >560, reducing startY valueto 560 to avoid press on sticky ad ");
+						logStep("Since Card position >560, reducing startY valueto 560 to avoid press on sticky ad ");
+						startY = 560;
 						performScrollTouchAction(1, startY, 0, moveY);
 					} else {
 						performScrollTouchAction(1, startY, 0, moveY);
@@ -5719,6 +5739,7 @@ public class Functions extends Driver {
 		while (!elementFound && !footerElementFound && ((currTime - startTime) <= cduration)) {
 		//while (!elementFound && !footerElementFound) {
 			System.out.println("********************************************");
+			logStep("********************************************");
 			By byele = MobileBy.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.weather.Weather:id/home_screen_list_view\"]/android.widget.FrameLayout[1]");
 			ele = Ad.findElement(byele);
 			Point loc = ele.getLocation();
@@ -5735,6 +5756,7 @@ public class Functions extends Driver {
 			//if (startY - offsetY <= 15) {
 			if ((int) (dim.height) <= 15) {
 				System.out.println("*******retrieving second card*******");
+				logStep("*******retrieving second card*******");
 				byele = MobileBy.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.weather.Weather:id/home_screen_list_view\"]/android.widget.FrameLayout[2]");
 				ele = Ad.findElement(byele);
 				loc = ele.getLocation();
@@ -5750,6 +5772,7 @@ public class Functions extends Driver {
 				//if (startY - offsetY <= 15) {
 				if ((int) (dim.height) <= 15) {
 					System.out.println("*******retrieving third card*******");
+					logStep("*******retrieving third card*******");
 					byele = MobileBy.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.weather.Weather:id/home_screen_list_view\"]/android.widget.FrameLayout[3]");
 					ele = Ad.findElement(byele);
 					loc = ele.getLocation();

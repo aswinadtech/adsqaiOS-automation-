@@ -2105,7 +2105,7 @@ public class AndroidRegressionTest extends TwcIosBaseTest {
 				
 		//hmTab.clickonHomeTab();
 		stScreen.select_Airlock_UserGroup("WMCards");
-		stScreen.select_Airlock_Branch("WMCards");
+		stScreen.select_Airlock_Branch("WMCardsNew");
 		proxy.clearCharlesSession();
 		Functions.close_launchAppAndroid();
 		hmTab.clickonHomeTab();
