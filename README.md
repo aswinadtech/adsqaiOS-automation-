@@ -1,1 +1,0 @@
-# adsqaios-automation
